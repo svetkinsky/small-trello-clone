@@ -4,12 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Webpack 4.0</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Trello Clone</title>
+    <link rel="shortcut icon" href="trello.ico" type="image/x-icon">
+    <link rel="stylesheet" type="html/css" href="./styles/fontawesome-free-5.12.1-web/css/all.min.css">
 </head>
 <body>
     
-    <div id="app"></div>
+    <header></header>
+
+    <main>
+        <div class="container">
+            <div class="board-header">
+                <div class="board-header-btn">
+                    <span class="board-header-btn-text">Small Trello Clone</span>
+                </div>
+                <a href="#" class="board-header-btns">
+                        <i class="far fa-star icon-sm"></i>
+                </a>
+                <span class="delimiter"></span>
+                <a href="#" class="board-header-btns">
+                    <span class="board-header-btns-personal">Персональная</span>
+                </a>
+                <span class="delimiter"></span>
+                <a href="#" class="board-header-btns">
+                    <i class="fas fa-lock"></i>
+                    <span class="board-header-btns-personal">Приватная</span>
+                </a>
+                <span class="delimiter"></span>
+
+                <div class="member">
+                    <div class="member-warp">
+                        <span class="member-initial">S</span>
+                    </div>
+                    <div class="member-warp">
+                        <span class="member-initial">C</span>
+                        <i class="fas fa-angle-double-up member-admin"></i>
+                    </div>
+                </div>
+
+                <a href="#" class="board-header-btns">
+                    <span class="board-header-btns-personal">Пригласить</span>
+                </a>
+                
+            </div>
+
+            <div class="board-body">
+                <div data-column-id="1" class="column">
+                    <div class="board-body-head" >To Do</div>
+                    <div data-tasks class="list">
+                        <div data-task-id="1" class="list-item">Задача 1</div>
+                        <div data-task-id="2" class="list-item">Задача 2</div>
+                        <div data-task-id="3" class="list-item">Задача 3</div>
+                        <div data-task-id="4" class="list-item">Задача 4</div>
+                    </div>
+                    <button class="tast-add">Добавить задачу</button>
+                </div>
+
+                <div data-column-id="2" class="column">
+                    <div class="board-body-head">In Progress</div>
+                    <div data-tasks class="list">
+                        <div data-task-id="5" class="list-item">Задача 1</div>
+                        <div data-task-id="6" class="list-item">Задача 2</div>
+                        <div data-task-id="7" class="list-item">Задача 3</div>
+                        <div data-task-id="8" class="list-item">Задача 4</div>
+                    </div>
+                    <button class="tast-add">Добавить задачу</button>
+                </div>
+
+                <div data-column-id="3" class="column">
+                    <div class="board-body-head">Done</div>
+                    <div data-tasks class="list">
+                        <div data-task-id="9" class="list-item">Задача 1</div>
+                        <div data-task-id="10" class="list-item">Задача 2</div>
+                        <div data-task-id="11" class="list-item">Задача 3</div>
+                        <div data-task-id="12" class="list-item">Задача 4</div>
+                    </div>
+                    <button class="tast-add">Добавить задачу</button>
+                </div>
+
+                <div class="column-add">Добавьте еще одну колонку</div>
+            </div>
+        </div>
+    </main>
+
+    <footer></footer>
 
 </body>
 </html>

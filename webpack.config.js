@@ -68,9 +68,9 @@ const jsLoaders = () => {
         options: babelOptions()
     }]
 
-    if (isDev) {
-        loaders.push('eslint-loader')
-    }
+    // if (isDev) {
+    //     loaders.push('eslint-loader')
+    // }
  
     return loaders
 }
@@ -86,9 +86,13 @@ const plugins = () => {
         new CleanWebpackPlugin(),
         new CopyWebpackPlugin([
             {
-                from: path.resolve(__dirname, 'src/favicon.ico'),
+                from: path.resolve(__dirname, 'src/trello.ico'),
                 to: path.resolve(__dirname, 'dist')
             },
+            {
+                from: './src/assets/fonts',
+                to: './fonts'
+            }
         ]),
         new MiniCssExtractPlugin({
                 filename: filename('css')
@@ -147,7 +151,7 @@ module.exports = {
                 use: ['file-loader']
             },
             {
-                test: /\.(ttf|woff|woff2|eot)$/,
+                test: /\.(ttf|woff|woff2|eot|otf)$/,
                 use: ["file-loader"]
             },
             {

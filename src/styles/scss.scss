@@ -1,13 +1,222 @@
+@import './fontawesome-free-5.12.1-web/css/all.min.css';
+// @import './font-awesome-4.7.0/scss/font-awesome.scss';
+// @import url("https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
 $border: 1px solid #ccc;
 
-.card {
-    padding: 1rem;
-    border-radius: 5px;
-    margin-top: 1rem;
-    border: $border;
+button, 
+button:active, 
+button:focus {
+    outline: none;
+}
 
-    h2{
-        text-align: center;
-        color: darkred;
+
+body,
+html,
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Noto Sans, Ubuntu, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+    //background: #223f4a;
+    background: url('../backgrounds/Bel6ZFoU0Zc.jpg');
+    color: #172b4d;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.board-header {
+    color: #ffffff;
+    padding: 8px 4px 4px 8px;
+    //background: rgba(0, 0, 0, .24);
+    display: flex;
+}
+
+.board-header-btn {
+    font-size: 18px;
+    font-weight: 700; 
+    line-height: 32px;
+}
+
+.board-header-btn-text {
+    padding: 0 12px;
+}
+
+.board-header-btns {
+    font-size: 14px;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 6px 8px;
+    background: hsla(0,0%,100%,.24);
+    border-radius: 3px;
+    text-decoration: none;
+    height: 32px;
+    margin: auto 4px;
+}
+
+.icon-sm {
+    line-height: 20px;
+    font-size: 16px;
+}
+
+.delimiter {
+    border-left: 1px solid hsla(0,0%,100%,.24);
+    height: 16px;
+    margin: 8px 4px 12px 4px;
+}
+
+.member {
+    
+    margin: auto 4px;
+}
+
+.member-warp {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: #dfe1e6;
+    padding: 4px 6px;
+    text-align: center;
+    position: relative;
+}
+
+.member-initial {
+    color: #172b4d;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    // padding-top: 5px;
+}
+
+.member-admin {
+    color: darkslateblue;
+    text-shadow: #dfe1e6 1px 1px 0, #dfe1e6 -1px -1px 0, 
+                 #dfe1e6 -1px 1px 0, #dfe1e6 1px -1px 0;
+    font-size: 10px;
+    position: absolute;
+    margin-top: 15px;
+    margin-left: 3px;
+}
+
+.board-body {
+    display: flex;
+    margin-top: 2px;
+
+    .board-body-head {
+        padding-bottom: 12px;
+        position: relative;
+        font-weight: 700;
+
+        &::after {
+            content: '...';
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #6b778c;
+            cursor: pointer;
+            padding: 0 8px;
+            height: 80%;
+        }
+
+        &:hover:after {
+            padding: 0 8px;
+            background: #dadbe2;
+            border-radius: 3px;
+            
+        }
     }
+
+    .column {
+        width: 272px;
+        background: #ebecf0;
+        border-radius: 3px;
+        margin-left: 8px;
+        padding: 16px;
+        height: 100%;
+
+        .list-item {
+            width: 100%;
+            height: 32px;
+            background: #ffffff;
+            border-radius: 3px;
+            box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
+            cursor: pointer;
+            //margin: 0 8px 8px;
+            box-shadow: 0 1px 0 rgba(9,30,66,.25);
+            padding: 6px 8px 2px;
+            margin-bottom: 8px;
+            transition: .5s;
+            
+            &:hover {
+                background: #f4f5f7;
+                transition: .5s;
+            }
+        }
+
+        button {
+            //padding: 4px 8px;
+            border: none;
+            background: none;
+            position: relative;
+            width: 100%;
+            text-align: left;
+            transition: .5s;
+            padding: 6px 8px 6px 28px;
+            color: #5e6c84;
+            cursor: pointer;
+            overflow: hidden;
+
+            &::before {
+                content: '+';
+                font-size: 24px;
+                font-weight: bold;
+                position: absolute;
+                left: 0;
+                top: -4px; 
+            }
+
+            &:hover {
+                background: #dadbe2;
+                border-radius: 3px;
+                transition: .5s;
+                color: #172b4d;
+                
+            }
+
+            
+        }
+    }
+
+    .column-add {
+        width: 272px;
+        background: hsla(0,0%,100%,.24);
+        border-radius: 3px;
+        margin-left: 8px;
+        padding: 16px 8px 16px 40px;
+        position: relative;
+        color: #ffffff;
+        font-weight: 400;
+        height: 100%;
+        cursor: pointer;
+
+        &::before {
+            content: '+';
+            font-size: 24px;
+            font-weight: bold;
+            position: absolute;
+            left: 16px;
+            top: 8px;
+            position: absolute;
+        }
+
+    }
+    
+    
 }
