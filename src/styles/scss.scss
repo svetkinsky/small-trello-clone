@@ -22,7 +22,7 @@ html,
 
 body {
     //background: #223f4a;
-    background: url('../backgrounds/Bel6ZFoU0Zc.jpg');
+    //background: url('../backgrounds/kordan1.jpg');
     color: #172b4d;
     font-size: 14px;
     font-weight: 400;
@@ -101,6 +101,10 @@ body {
     position: absolute;
     margin-top: 15px;
     margin-left: 3px;
+}
+
+.unvisible {
+    opacity: 0;
 }
 
 .board-body {
