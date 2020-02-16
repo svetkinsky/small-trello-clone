@@ -41,7 +41,8 @@ columnAdd.addEventListener('click', function () {
     newColumn.append(newList)
     newColumn.append(newColumnButton)
 
-    document.querySelector('.column-add').before(newColumn)
+    //**********!!!!!!**********
+    document.querySelector('.column-list').append(newColumn)
 
     addTasks(newColumn)
     //eventsDrag(newColumn)

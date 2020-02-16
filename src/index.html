@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,9 @@
     <link rel="shortcut icon" href="trello.ico" type="image/x-icon">
     <link rel="stylesheet" type="html/css" href="./styles/fontawesome-free-5.12.1-web/css/all.min.css">
 </head>
+
 <body>
-    
+
     <header></header>
 
     <main>
@@ -19,7 +21,7 @@
                     <span class="board-header-btn-text">Small Trello Clone</span>
                 </div>
                 <a href="#" class="board-header-btns">
-                        <i class="far fa-star icon-sm"></i>
+                    <i class="far fa-star icon-sm"></i>
                 </a>
                 <span class="delimiter"></span>
                 <a href="#" class="board-header-btns">
@@ -45,43 +47,44 @@
                 <a href="#" class="board-header-btns">
                     <span class="board-header-btns-personal">Пригласить</span>
                 </a>
-                
+
             </div>
 
             <div class="board-body">
-                <div data-column-id="1" class="column">
-                    <div class="board-body-head edit">To Do</div>
-                    <div data-tasks class="list">
-                        <div data-task-id="1" class="list-item edit" draggable="true">Задача 1</div>
-                        <div data-task-id="2" class="list-item edit" draggable="true">Задача 2</div>
-                        <div data-task-id="3" class="list-item edit" draggable="true">Задача 3</div>
-                        <div data-task-id="4" class="list-item edit" draggable="true">Задача 4</div>
+                <div class="column-list">
+                    <div data-column-id="1" class="column">
+                        <div class="board-body-head edit">To Do</div>
+                        <div data-tasks class="list">
+                            <div data-task-id="1" class="list-item edit" draggable="true">Задача 1</div>
+                            <div data-task-id="2" class="list-item edit" draggable="true">Задача 2</div>
+                            <div data-task-id="3" class="list-item edit" draggable="true">Задача 3</div>
+                            <div data-task-id="4" class="list-item edit" draggable="true">Задача 4</div>
+                        </div>
+                        <button class="tast-add">Добавить задачу</button>
                     </div>
-                    <button class="tast-add">Добавить задачу</button>
-                </div>
 
-                <div data-column-id="2" class="column">
-                    <div class="board-body-head edit">In Progress</div>
-                    <div data-tasks class="list">
-                        <div data-task-id="5" class="list-item edit" draggable="true">Задача 1</div>
-                        <div data-task-id="6" class="list-item edit" draggable="true">Задача 2</div>
-                        <div data-task-id="7" class="list-item edit" draggable="true">Задача 3</div>
-                        <div data-task-id="8" class="list-item edit" draggable="true">Задача 4</div>
+                    <div data-column-id="2" class="column">
+                        <div class="board-body-head edit">In Progress</div>
+                        <div data-tasks class="list">
+                            <div data-task-id="5" class="list-item edit" draggable="true">Задача 1</div>
+                            <div data-task-id="6" class="list-item edit" draggable="true">Задача 2</div>
+                            <div data-task-id="7" class="list-item edit" draggable="true">Задача 3</div>
+                            <div data-task-id="8" class="list-item edit" draggable="true">Задача 4</div>
+                        </div>
+                        <button class="tast-add">Добавить задачу</button>
                     </div>
-                    <button class="tast-add">Добавить задачу</button>
-                </div>
 
-                <div data-column-id="3" class="column">
-                    <div class="board-body-head edit">Done</div>
-                    <div data-tasks class="list">
-                        <div data-task-id="9" class="list-item edit" draggable="true">Задача 1</div>
-                        <div data-task-id="10" class="list-item edit" draggable="true">Задача 2</div>
-                        <div data-task-id="11" class="list-item edit" draggable="true">Задача 3</div>
-                        <div data-task-id="12" class="list-item edit" draggable="true">Задача 4</div>
+                    <div data-column-id="3" class="column">
+                        <div class="board-body-head edit">Done</div>
+                        <div data-tasks class="list">
+                            <div data-task-id="9" class="list-item edit" draggable="true">Задача 1</div>
+                            <div data-task-id="10" class="list-item edit" draggable="true">Задача 2</div>
+                            <div data-task-id="11" class="list-item edit" draggable="true">Задача 3</div>
+                            <div data-task-id="12" class="list-item edit" draggable="true">Задача 4</div>
+                        </div>
+                        <button class="tast-add">Добавьте задачу</button>
                     </div>
-                    <button class="tast-add">Добавьте задачу</button>
                 </div>
-
                 <div class="column-add">Добавьте еще одну колонку</div>
             </div>
         </div>
@@ -95,4 +98,5 @@
     </footer>
 
 </body>
+
 </html>
