@@ -1,0 +1,91 @@
+{
+    "id":21324354658798,
+    "status":{"code":1},
+    "warnings":{"text":""},
+    "content":[
+      {
+        "id":12,
+        "visible":true,
+        "name":"hard skills",
+        "type":"column",
+        "editable":true,
+        "tasks":[
+          {
+            "id":1,
+            "visible":true,
+            "text":"release strategy",
+            "type":"task",
+            "editable":true
+          },
+          {"id":3,"visible":true,"text":"logging","type":"task","editable":true},
+          {
+            "id":5,
+            "visible":true,
+            "text":"scrum/agile",
+            "type":"task",
+            "editable":true
+          },
+          {
+            "id":7,
+            "visible":true,
+            "text":"code standards",
+            "type":"task",
+            "editable":true
+          }
+        ]
+      },
+      {
+        "id":12,
+        "visible":true,
+        "name":"soft skills",
+        "type":"column",
+        "editable":true,
+        "tasks":[
+          {
+            "id":21,
+            "visible":true,
+            "text":"negotiation skills",
+            "type":"task",
+            "editable":true
+          },
+          {
+            "id":13,
+            "visible":true,
+            "text":"team work",
+            "type":"task",
+            "editable":true
+          },
+          {
+            "id":55,
+            "visible":true,
+            "text":"stress tolerance",
+            "type":"task",
+            "editable":true
+          }
+        ]
+      },
+      {
+        "id":192,
+        "visible":true,
+        "name":"english",
+        "type":"column",
+        "editable":true,
+        "tasks":[
+          {
+            "id":213,
+            "visible":true,
+            "text":"english writing",
+            "type":"task",
+            "editable":true
+          },
+          {
+            "id":413,
+            "visible":true,
+            "text":"english speaking",
+            "type":"task",
+            "editable":true
+          }
+        ]
+      }
+    ]
+  }

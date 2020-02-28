@@ -5,13 +5,17 @@ const Column = {
     draggingColumn: null,
 
     create(id = null, content = '') {
+        if(id) {
+            Column.idColumns = id
+        }
+
         const newColumn = document.createElement('div')
         const newColumnHead = document.createElement('div')
         const newColumnButton = document.createElement('button')
         const newList = document.createElement('div')
 
         newColumnButton.innerHTML = 'Добавьте задачу'
-        newColumnHead.innerHTML = 'New List'
+        newColumnHead.innerHTML = content
 
         newColumn.classList.add('column')
         newColumn.setAttribute('data-column-id', Column.idColumns)
@@ -147,6 +151,4 @@ const Column = {
 
 }
 
-export {
-    Column
-}
+export {Column}

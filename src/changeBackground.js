@@ -13,4 +13,4 @@ const changeBackground = {
     }
 }
 
-export {changeBackground}
+export default changeBackground
