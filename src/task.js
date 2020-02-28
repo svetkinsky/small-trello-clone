@@ -41,9 +41,14 @@ const Task = {
             const id = element.getAttribute('data-task-id')
             const content = element.innerHTML
             const idParent = element.closest('.column').getAttribute('data-column-id')
+            
+            const body = 'id=' + encodeURIComponent(id) +
+            '&content=' + encodeURIComponent(content) + 
+            '&idParent=' + encodeURIComponent(idParent)
+
             element.removeAttribute('contenteditable')
-            Xhr.saveTask(id, content, idParent)
-            //Xhr.sendTaskRequest()
+
+            Xhr.sendTaskRequest('/submit', 'POST', body)
         })
 
 
