@@ -1,4 +1,6 @@
-import {Xhr} from './xhr'
+import {
+    Xhr
+} from './xhr'
 
 const Task = {
     idTasks: 13,
@@ -32,29 +34,31 @@ const Task = {
     },
 
     eventEdit(element) {
+        let contentBeforeEdit = ''
         element.addEventListener('dblclick', () => {
+            contentBeforeEdit = element.innerHTML
             element.setAttribute('contenteditable', true)
             element.focus()
         })
         element.addEventListener('blur', () => {
-            console.log(element)
-            const id = element.getAttribute('data-task-id')
             const content = element.innerHTML
-            const idParent = element.closest('.column').getAttribute('data-column-id')
-            
-            const body = 'id=' + encodeURIComponent(id) +
-            '&content=' + encodeURIComponent(content) + 
-            '&idParent=' + encodeURIComponent(idParent)
-
             element.removeAttribute('contenteditable')
+            if (contentBeforeEdit !== content) {
+                const id = element.getAttribute('data-task-id')
+                const idParent = element.closest('.column').getAttribute('data-column-id')
 
-            Xhr.sendTaskRequest('/submit', 'POST', body)
+                const body = 'id=' + encodeURIComponent(id) +
+                    '&content=' + encodeURIComponent(content) +
+                    '&idParent=' + encodeURIComponent(idParent)
+                
+                Xhr.sendTaskRequest('/submit', 'POST', body)
+            }
         })
 
 
     },
 
-   
+
 
     addDragEndDropEventToTask(element) {
         element.addEventListener('dragstart', Task.eventDragStartTask)
