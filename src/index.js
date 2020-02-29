@@ -21,6 +21,7 @@ const respJSON  = response //Почему сделали константу? Э�
 const columnList = document.querySelector('.column-list')
 
 
+
 //проверка на "ошибки"
 if(respJSON.status.code !== 0) {
     console.log('Error')
@@ -62,6 +63,7 @@ const addTasks = element => {
     const buttonAdd = element.querySelector('.tast-add')
 
     buttonAdd.addEventListener('click', function (event) {
+        
         const list = element.querySelector('.list')
         list.append(Task.create())
 

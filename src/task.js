@@ -28,6 +28,8 @@ const Task = {
         Task.eventEdit(newTask)
         Task.addDragEndDropEventToTask(newTask)
 
+        console.log(Task.idTasks)
+
         return newTask
     },
 

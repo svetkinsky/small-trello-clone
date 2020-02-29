@@ -13,7 +13,6 @@ const Column = {
         if (id) {
             Column.idColumns = id
         }
-
         const newColumn = document.createElement('div')
         const newColumnHead = document.createElement('div')
         const newColumnButton = document.createElement('button')
@@ -81,10 +80,27 @@ const Column = {
 
     addTasks(element) {
         const buttonAdd = element.querySelector('.tast-add')
-
         buttonAdd.addEventListener('click', function (event) {
+            //все задачи
+            const tasks = document.querySelectorAll('[data-task-id]')
+            
+            //массив id задач
+            let idTask = []
+           
+            //формирование массива id задач
+            tasks.forEach(function(task) {
+               idTask.push(task.getAttribute('data-task-id'))
+            })       
+            
+            //console.log(idTask)
+
+            //макс id задач
+            let maxIdTask = Math.max(idTask)
+
             const list = element.querySelector('.list')
-            list.append(Task.create())
+
+            //при создании новой задачи передается id следующий после максимального
+            list.append(Task.create(maxIdTask++))
 
             //фокус на добавленную задачу 
             list.lastChild.focus()
