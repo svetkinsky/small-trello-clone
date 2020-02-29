@@ -20,7 +20,7 @@ const Task = {
         Task.idTasks++
         //фокус на добавленную задачу 
 
-        newTask.setAttribute('contenteditable', 'true')
+        //newTask.setAttribute('contenteditable', 'true')
         newTask.addEventListener('blur', () => {
             newTask.removeAttribute('contenteditable')
         })
@@ -28,7 +28,7 @@ const Task = {
         Task.eventEdit(newTask)
         Task.addDragEndDropEventToTask(newTask)
 
-        console.log(Task.idTasks)
+        //console.log(Task.idTasks)
 
         return newTask
     },

@@ -5,6 +5,7 @@ import changeBackground from './changeBackground'
 import {Task} from './task'
 import {Column} from './column'
 import response from '../response.json'
+import {Xhr} from './xhr'
 
 
 
@@ -17,9 +18,16 @@ let columns = document.querySelectorAll('.column')
 let editItems = document.querySelectorAll('.edit')
 
 
-const respJSON  = response //Почему сделали константу? Это экземпляр?
+
+let respJSON = Xhr.getTasks()
+
+// setTimeout(() => {
+//     respJSON = Xhr.getTasks()
+
+// }, 2000)
 const columnList = document.querySelector('.column-list')
 
+console.log('respJSON: ', respJSON)
 
 
 //проверка на "ошибки"
@@ -49,9 +57,28 @@ content.forEach((column) => {
 
 
 //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 
-columnAdd.addEventListener('click', function () {
+columnAdd.addEventListener('click', function () {   
+    const currentColumns = document.querySelectorAll('[data-column-id]')
+    //массив id колонок
+    let idColumn = []
+   
+    //формирование массива id колонок
+    currentColumns.forEach(function(column) {
+        idColumn.push(column.getAttribute('data-column-id'))
+    })       
     
-    columnList.append(Column.create())
+    console.log(currentColumns)
+    console.log(typeof idColumn)
+
+    //макс id колонок
+    let maxIdColumn = Math.max(idColumn)
+
+
+    //******ПОЧЕМУ NAN??????????******/
+
+    console.log('maxIdColumn', typeof maxIdColumn)
+    
+    columnList.append(Column.create(maxIdColumn++))
 
     //фокус на заголовке новой колонки
     columnList.lastChild.querySelector('.board-body-head').focus()
@@ -78,7 +105,7 @@ const addTasks = element => {
 columns.forEach(addTasks);
 
 
-//функция задач и заголовков колонок
+//функция редактирования задач и заголовков колонок
 const eventEdit = element => {
     element.addEventListener('dblclick', () => {
         element.setAttribute('contenteditable', true)
@@ -100,6 +127,8 @@ document.querySelectorAll('[data-task-id]').forEach(Task.addDragEndDropEventToTa
 
 //навешивание drug&drop на все колонки
 document.querySelectorAll('[data-column-id]').forEach(Column.addDragEndDropEventToColumn)
+
+
 
 
 

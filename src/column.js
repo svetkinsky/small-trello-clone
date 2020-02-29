@@ -23,6 +23,9 @@ const Column = {
 
         newColumn.classList.add('column')
         newColumn.setAttribute('data-column-id', Column.idColumns)
+
+        console.log(Column.idColumns)
+
         newColumn.setAttribute('draggable', 'true')
         Column.idColumns++
 
@@ -43,6 +46,8 @@ const Column = {
         Column.addTasks(newColumn)
 
         Column.addDragEndDropEventToColumn(newColumn)
+
+       
 
         return newColumn
     },
@@ -74,9 +79,10 @@ const Column = {
                 Xhr.sendTaskRequest('/submit', 'POST', body)
             }
         })
-
-
     },
+
+
+
 
     addTasks(element) {
         const buttonAdd = element.querySelector('.tast-add')
