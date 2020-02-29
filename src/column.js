@@ -81,7 +81,15 @@ const Column = {
         })
     },
 
+    maxId(elements, attribute) {
+        let ids = []
+        elements.forEach(function(element) {
+            ids.push(task.getAttribute(attribute))
+        })
 
+        let maxId = Math.max(ids)
+        return maxId
+    },
 
 
     addTasks(element) {
@@ -111,7 +119,6 @@ const Column = {
             //фокус на добавленную задачу 
             list.lastChild.focus()
         })
-
 
     },
 

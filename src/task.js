@@ -33,6 +33,8 @@ const Task = {
         return newTask
     },
 
+ 
+
     eventEdit(element) {
         //контент задачи до изменения
         let contentBeforeEdit = ''
