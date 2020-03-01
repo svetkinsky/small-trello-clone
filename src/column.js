@@ -17,39 +17,41 @@ const Column = {
         const newColumnHead = document.createElement('div')
         const newColumnButton = document.createElement('button')
         const newList = document.createElement('div')
+    
+        newColumn.classList.add('column')
+        newColumnHead.classList.add('board-body-head', 'edit')
+        newList.classList.add('list')
+        newColumnButton.classList.add('tast-add')
+
+        newColumn.setAttribute('data-column-id', Column.idColumns)
+        Column.idColumns++
+        newColumn.setAttribute('draggable', 'true')
 
         newColumnButton.innerHTML = 'Добавьте задачу'
         newColumnHead.innerHTML = content
-
-        newColumn.classList.add('column')
-        newColumn.setAttribute('data-column-id', Column.idColumns)
-
-        console.log(Column.idColumns)
-
-        newColumn.setAttribute('draggable', 'true')
-        Column.idColumns++
-
-        newColumnHead.classList.add('board-body-head', 'edit')
-        newColumnHead.setAttribute('contenteditable', 'true')
-        newColumnHead.addEventListener('blur', () => {
-            newColumnHead.removeAttribute('contenteditable')
-        })
-
-        Column.eventEdit(newColumnHead)
-        newList.classList.add('list')
-        newColumnButton.classList.add('tast-add')
 
         newColumn.append(newColumnHead)
         newColumn.append(newList)
         newColumn.append(newColumnButton)
 
-        Column.addTasks(newColumn)
-
+        Column.eventEdit(newColumnHead) 
+        Column.addTasks(newColumn, Column.idColumns)
         Column.addDragEndDropEventToColumn(newColumn)
+
+        return newColumn
+       
+        // newColumnHead.setAttribute('contenteditable', 'true')
+        // newColumnHead.addEventListener('blur', () => {
+        //     newColumnHead.removeAttribute('contenteditable')
+        // })
 
        
 
-        return newColumn
+        //**********не знаю пока на сколько код написан в правильном месте*/
+        //****скорее всего НЕ ПРАВИЛЬНО!!! */
+        
+        // const tasks = document.querySelectorAll('[data-task-id]') 
+        // Column.addTasks(newColumn, Column.maxId(tasks, 'data-task-id')) 
     },
 
     eventEdit(element) {
@@ -84,7 +86,7 @@ const Column = {
     maxId(elements, attribute) {
         let ids = []
         elements.forEach(function(element) {
-            ids.push(task.getAttribute(attribute))
+            ids.push(element.getAttribute(attribute))
         })
 
         let maxId = Math.max(ids)
@@ -92,29 +94,31 @@ const Column = {
     },
 
 
-    addTasks(element) {
+    addTasks(element, id) {
         const buttonAdd = element.querySelector('.tast-add')
         buttonAdd.addEventListener('click', function (event) {
-            //все задачи
-            const tasks = document.querySelectorAll('[data-task-id]')
+            // //все задачи
+            // const tasks = document.querySelectorAll('[data-task-id]')
             
-            //массив id задач
-            let idTask = []
+            // //массив id задач
+            // let idTask = []
            
-            //формирование массива id задач
-            tasks.forEach(function(task) {
-               idTask.push(task.getAttribute('data-task-id'))
-            })       
+            // //формирование массива id задач
+            // tasks.forEach(function(task) {
+            //    idTask.push(task.getAttribute('data-task-id'))
+            // })       
             
-            //console.log(idTask)
+            // //console.log(idTask)
 
-            //макс id задач
-            let maxIdTask = Math.max(idTask)
+            // //макс id задач
+            // let maxIdTask = Math.max(idTask)
 
             const list = element.querySelector('.list')
 
             //при создании новой задачи передается id следующий после максимального
-            list.append(Task.create(maxIdTask++))
+
+            console.log('Max ID: ', id)
+            list.append(Task.create(id++))
 
             //фокус на добавленную задачу 
             list.lastChild.focus()

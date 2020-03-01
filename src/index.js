@@ -39,6 +39,8 @@ if(respJSON.status.code !== 0) {
 //массив колонок с "бэка"
 const content = respJSON.content || []
 
+
+
 //перебор массива контента (колонок) с json (бэка), создание и добавление новой колонки и заполнение ее контентом с "бэка"
 //здесь column - элемент массива content
 content.forEach((column) => {
@@ -54,6 +56,8 @@ content.forEach((column) => {
     }) 
     columnList.append(newColumn)
 })
+
+
 
 
 //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 
@@ -83,6 +87,10 @@ columnAdd.addEventListener('click', function () {
     //фокус на заголовке новой колонки
     columnList.lastChild.querySelector('.board-body-head').focus()
 })
+
+
+
+
 
 
 //функция создания и добавления новой задачи при нажатии на кнопку "Добавьте задачу"
