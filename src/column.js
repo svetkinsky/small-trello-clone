@@ -9,7 +9,8 @@ const Column = {
     idColumns: 4,
     draggingColumn: null,
 
-    create(id = null, content = '') {
+
+    create(id = null, content = '', maxIdTask) {
         if (id) {
             Column.idColumns = id
         }
@@ -35,23 +36,11 @@ const Column = {
         newColumn.append(newColumnButton)
 
         Column.eventEdit(newColumnHead) 
-        Column.addTasks(newColumn, Column.idColumns)
+        Column.addTasks(newColumn, maxIdTask)
         Column.addDragEndDropEventToColumn(newColumn)
 
         return newColumn
        
-        // newColumnHead.setAttribute('contenteditable', 'true')
-        // newColumnHead.addEventListener('blur', () => {
-        //     newColumnHead.removeAttribute('contenteditable')
-        // })
-
-       
-
-        //**********не знаю пока на сколько код написан в правильном месте*/
-        //****скорее всего НЕ ПРАВИЛЬНО!!! */
-        
-        // const tasks = document.querySelectorAll('[data-task-id]') 
-        // Column.addTasks(newColumn, Column.maxId(tasks, 'data-task-id')) 
     },
 
     eventEdit(element) {
@@ -83,45 +72,18 @@ const Column = {
         })
     },
 
-    maxId(elements, attribute) {
-        let ids = []
-        elements.forEach(function(element) {
-            ids.push(element.getAttribute(attribute))
-        })
-
-        let maxId = Math.max(ids)
-        return maxId
-    },
 
 
     addTasks(element, id) {
         const buttonAdd = element.querySelector('.tast-add')
         buttonAdd.addEventListener('click', function (event) {
-            // //все задачи
-            // const tasks = document.querySelectorAll('[data-task-id]')
-            
-            // //массив id задач
-            // let idTask = []
-           
-            // //формирование массива id задач
-            // tasks.forEach(function(task) {
-            //    idTask.push(task.getAttribute('data-task-id'))
-            // })       
-            
-            // //console.log(idTask)
-
-            // //макс id задач
-            // let maxIdTask = Math.max(idTask)
-
             const list = element.querySelector('.list')
 
-            //при создании новой задачи передается id следующий после максимального
-
-            console.log('Max ID: ', id)
-            list.append(Task.create(id++))
+            list.append(Task.create(id))
 
             //фокус на добавленную задачу 
             list.lastChild.focus()
+            console.log('Max Id of tasks: ', id)
         })
 
     },
