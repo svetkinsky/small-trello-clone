@@ -25,8 +25,9 @@ let editItems = document.querySelectorAll('.edit')
 
 
 
-let respJSON = response //Xhr.getTasks()
+//let respJSON = response //Xhr.getTasks()
 
+let respJSON = Xhr.getTasks()
 // setTimeout(() => {
 //     respJSON = Xhr.getTasks()
 
@@ -64,23 +65,28 @@ content.forEach((column) => {
 
             //*****************Пришлось сделать ДВА цикла, чтобы в строку 72 передался нужный maxIdTaskCandidate*/
             //*****************это навеоное тоже нехорошо? */
-            tasks.forEach((taskElement) => {
+            // tasks.forEach((taskElement) => {
+            //         if (maxIdTaskCandidate < taskElement.id) {
+            //             maxIdTaskCandidate = taskElement.id
+            //         }
+            //     })
+                const newColumn = Column.create(column.id, column.name)
+                //перебор массива задач для добавления их в колонку
+                tasks.forEach((taskElement) => {
                     if (maxIdTaskCandidate < taskElement.id) {
                         maxIdTaskCandidate = taskElement.id
                     }
-                })
-                const newColumn = Column.create(column.id, column.name, ++maxIdTaskCandidate)
-                //перебор массива задач для добавления их в колонку
-                tasks.forEach((taskElement) => {
-                   
                     const newTask = Task.create(taskElement.id, taskElement.text)
                     newColumn.querySelector('.list').append(newTask)
 
                 })
+               
 
+               
                 columnList.append(newColumn)
             })
-
+            Column.maxIdTask = maxIdTaskCandidate
+            console.log('maxIdTaskCandidate', maxIdTaskCandidate)
 
 
         //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 

@@ -8,9 +8,10 @@ import {
 const Column = {
     idColumns: 4,
     draggingColumn: null,
+    maxIdTask: 0,
 
 
-    create(id = null, content = '', maxIdTask) {
+    create(id = null, content = '') {
         if (id) {
             Column.idColumns = id
         }
@@ -36,7 +37,7 @@ const Column = {
         newColumn.append(newColumnButton)
 
         Column.eventEdit(newColumnHead) 
-        Column.addTasks(newColumn, maxIdTask)
+        Column.addTasks(newColumn)
         Column.addDragEndDropEventToColumn(newColumn)
 
         return newColumn
@@ -75,16 +76,16 @@ const Column = {
 
 
 
-    addTasks(element, id) {
+    addTasks(element) {
         const buttonAdd = element.querySelector('.tast-add')
         buttonAdd.addEventListener('click', function (event) {
             const list = element.querySelector('.list')
 
-            list.append(Task.create(id))
+            list.append(Task.create(++Column.maxIdTask))
 
             //фокус на добавленную задачу 
             list.lastChild.focus()
-            console.log('Max Id of tasks: ', id)
+            console.log('Max Id of tasks: ', Column.maxIdTask)
         })
 
     },

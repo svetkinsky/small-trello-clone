@@ -38,5 +38,5 @@ app.listen(PORT, (error) => {
     if (error) {
         throw error
     }
-    console.log('сервер запущен')
+    console.log(`сервер запущен на порту ${PORT}...`)
 })
