@@ -43,6 +43,8 @@ const Column = {
        
     },
 
+    
+
     eventEdit(element) {
         //контент заголовка колонки до изменения
         let titleBeforeEdit = ''
@@ -63,8 +65,7 @@ const Column = {
                 const id = element.closest('.column').getAttribute('data-column-id')
 
                 //формирование body для передачи в запрос
-                const body = 'id=' + encodeURIComponent(id) +
-                    '&title=' + encodeURIComponent(title)
+                const body = JSON.stringify({"id": id, "title": title})
 
                 //отправка запроса
                 Xhr.sendTaskRequest('/submit', 'POST', body)

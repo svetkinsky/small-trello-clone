@@ -62,7 +62,8 @@ content.forEach((column) => {
             const tasks = column.tasks || []
 
 
-            //*****************Пришлось сделать ДВА цикла, чтобы в строку 71 передался нужный maxIdTaskCandidate*/
+            //*****************Пришлось сделать ДВА цикла, чтобы в строку 72 передался нужный maxIdTaskCandidate*/
+            //*****************это навеоное тоже нехорошо? */
             tasks.forEach((taskElement) => {
                     if (maxIdTaskCandidate < taskElement.id) {
                         maxIdTaskCandidate = taskElement.id
@@ -71,6 +72,7 @@ content.forEach((column) => {
                 const newColumn = Column.create(column.id, column.name, ++maxIdTaskCandidate)
                 //перебор массива задач для добавления их в колонку
                 tasks.forEach((taskElement) => {
+                   
                     const newTask = Task.create(taskElement.id, taskElement.text)
                     newColumn.querySelector('.list').append(newTask)
 
@@ -79,17 +81,6 @@ content.forEach((column) => {
                 columnList.append(newColumn)
             })
 
-
-
-        // maxId(elements, attribute) {
-        //     let ids = []
-        //     elements.forEach(function(element) {
-        //         ids.push(element.getAttribute(attribute))
-        //     })
-
-        //     let maxId = Math.max(ids)
-        //     return maxId
-        // }
 
 
         //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 

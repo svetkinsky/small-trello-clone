@@ -1,4 +1,6 @@
-import {Xhr} from './xhr'
+import {
+    Xhr
+} from './xhr'
 
 const Task = {
     idTasks: 13,
@@ -33,7 +35,12 @@ const Task = {
         return newTask
     },
 
- 
+
+    contentEditSendRequest(element, contentBeforeEdit, contentAfterEdit, body) {
+        // let contentBeforeEdit = element.innerHTML
+
+    },
+
 
     eventEdit(element) {
         //контент задачи до изменения
@@ -44,25 +51,27 @@ const Task = {
             element.focus()
         })
         element.addEventListener('blur', () => {
-             //контент задачи после изменения
-            const content = element.innerHTML
+            //контент задачи после изменения
+            const content = element.innerHTM
 
-            //удаление атрибута contenteditable после убирания фокуса
-            element.removeAttribute('contenteditable')
-
-            //проверка было ли изменение задачи
             if (contentBeforeEdit !== content) {
                 const id = element.getAttribute('data-task-id')
                 const idParent = element.closest('.column').getAttribute('data-column-id')
 
-                //формирование body для передачи в запрос
-                const body = 'id=' + encodeURIComponent(id) +
-                    '&content=' + encodeURIComponent(content) +
-                    '&idParent=' + encodeURIComponent(idParent)
-                
+                const body = JSON.stringify({
+                    "id": id,
+                    "content": content,
+                    "idParent": idParent
+                })
                 //отправка запроса
                 Xhr.sendTaskRequest('/submit', 'POST', body)
             }
+
+
+            //удаление атрибута contenteditable после убирания фокуса
+            element.removeAttribute('contenteditable')
+
+
         })
 
 
