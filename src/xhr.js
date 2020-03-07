@@ -1,4 +1,6 @@
 const Xhr = {
+  xhrREsponse: {},
+
      //метод формирования запроса на сервер
     sendTaskRequest(url, method, body) {
         //создание экземпляра объекта XHR
@@ -23,14 +25,11 @@ const Xhr = {
               console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`); // Например, 404: Not Found
             } else { // если всё прошло гладко, выводим результат
               console.log(`Готово, получили ${xhr.response.length} байт`); // response -- это ответ сервера
-
-
-              //?????????????????????????????????????????
-              setTimeout(() => {
-                return xhr.response
-              }, 2000) 
+              
+              Xhr.xhrREsponse = JSON.parse(xhr.response)
+              console.log('type of response: ', typeof Xhr.xhrREsponse)
+              return xhr.response
             }
-
           };
           
          

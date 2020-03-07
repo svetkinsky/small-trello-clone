@@ -1,11 +1,11 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 3000
 
 const app = express()
 
-app.use('/', express.static(__dirname + '/dist'))
+app.use('/', express.static(__dirname + '/dist')) // 
 
 
 app.get('/tasks', (rq, rs) => {
@@ -17,13 +17,13 @@ app.get('/tasks', (rq, rs) => {
         }
         rs.type('json').send(data)
     })
-   // rs.send()
+    // rs.send()
 })
 
 app.use('/', (rq, rs) => {
     const filePath = path.resolve(__dirname, './dist/index.html')
     //console.log('filePath', filePath)
-   // rs.setHeader('content-type', 'text/html')
+    //rs.setHeader('content-type', 'text/html')
     fs.readFile(filePath, 'utf-8', (error, data) => {
         if (error) {
             rs.status('404').send('file not found')
@@ -31,7 +31,7 @@ app.use('/', (rq, rs) => {
         //console.log('data', data)
         rs.send(data)
     })
-   // rs.send()
+    // rs.send()
 })
 
 app.listen(PORT, (error) => {
