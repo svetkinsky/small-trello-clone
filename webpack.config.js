@@ -92,7 +92,11 @@ const plugins = () => {
             {
                 from: './src/assets/fonts',
                 to: './fonts'
-            }
+            },
+            {
+                from: './src/backgrounds',
+                to: './backgrounds'
+            },
         ]),
         new MiniCssExtractPlugin({
                 filename: filename('css')
