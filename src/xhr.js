@@ -22,14 +22,13 @@ const Xhr = {
 
 
       xhr.onload = function () {
-        if (xhr.status != 200) {
-          console.log(`Ошибка ${xhr.status}: ${xhr.statusText}`)
+        if (this.status != 200) {
+          console.log(`Ошибка ${this.status}: ${this.statusText}`)
           let error = new Error(this.statusText)
           error.code = this.status
           reject(error)
         } else { // если всё прошло гладко, выводим результат
-          console.log(`Готово, получили ${xhr.response.length} байт`); // response -- это ответ сервера
-          console.log('TYPE OF RESPONE', typeof this.response)
+          console.log(`Готово, получили ${this.response.length} байт`); // response -- это ответ сервера
           resolve(JSON.parse(this.response))
           //return this.response
         }
