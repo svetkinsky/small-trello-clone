@@ -27,22 +27,20 @@ let editItems = document.querySelectorAll('.edit')
 
 //let respJSON = response 
 
+let respJSON = Xhr.getTasks()
 
-Xhr.getTasks()
-let respJSON
-setTimeout(() => {
-    respJSON = Xhr.xhrREsponse
-    run()
-}, 2000)
+respJSON.then((data) =>{
+    run(data)
+})
 
-const run = () => {
-    console.log('respJSON: ', typeof respJSON)
+const run = (getTaskData) => {
+    console.log('getTaskData: ', getTaskData)
 
     const columnList = document.querySelector('.column-list')
 
 
     //проверка на "ошибки"
-    if (respJSON.status.code !== 0) {
+    if (getTaskData.status.code !== 0) {
         console.log('Error')
     }
 
@@ -50,7 +48,7 @@ const run = () => {
 
 
     //массив колонок с "бэка"
-    const content = respJSON.content || []
+    const content = getTaskData.content || []
 
     //максимальные id колонки и задачи
     let maxIdTaskCandidate = 0
@@ -128,5 +126,6 @@ const run = () => {
 
     //навешивание drug&drop на все колонки
     document.querySelectorAll('[data-column-id]').forEach(Column.addDragEndDropEventToColumn)
+
 
 }
