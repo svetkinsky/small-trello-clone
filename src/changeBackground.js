@@ -12,4 +12,4 @@ const changeBackground = {
     }
 }
 
-export default changeBackground
+export {changeBackground}

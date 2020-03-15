@@ -1,7 +1,7 @@
 import './styles/scss.scss'
 //import './xhr'
 
-import changeBackground from './changeBackground'
+import {changeBackground} from './changeBackground'
 import {
     Task
 } from './task'

@@ -4,16 +4,18 @@ const fs = require('fs')
 const advice = require('./advice')
 //const PORT = process.env.PORT || 3000
 
-const app = express()
-const handlebars = require('express-handlebars').create({defaultLayout: 'main'})
 
-app.engine('handlebars', handlebars.engine)
+//********????Это инициализация того с чем будет работать express???????
+const app = express()
+const expressHBS = require('express-handlebars').create({defaultLayout: 'main'})  
+app.engine('handlebars', expressHBS.engine)  
 app.set('view engine', 'handlebars')
 
 
-app.set('port', process.env.PORT || 4000)
+app.set('port', process.env.PORT || 3000)
 
 app.use('/', express.static(__dirname + '/public'))
+
 
 
 
