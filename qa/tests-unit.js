@@ -1,17 +1,42 @@
-const advice = require('../advice')
-const changeBg = require('../src/changeBackground')
-const assert = require('chai').assert
+import advice from '../advice'
+import {
+    changeBackground
+} from '../src/changeBackground'
+import {
+    Column
+} from '../src/column'
+import {
+    expect
+} from "chai"
 
-const backgroundImage = ['url(/backgrounds/kordan1.jpg)', 'url(/backgrounds/kordan2.jpg)', 'url(/backgrounds/kordan3.jpg)', 'url(/backgrounds/kordan4.jpg)', 'url(/backgrounds/kordan5.jpg)', 'url(/backgrounds/kordan6.jpg)']
+require('jsdom-global')()
 
-suite('Test get advice', () => {
-    test('getAdvice() должен вернуть advice', () => {
-        assert(typeof advice.getAdvice() === 'string')
+
+
+describe("Test advice", () => {
+    describe("Testing advice.getAdvice()", () => {
+        it("should equal string", () => {
+            const str = typeof advice.getAdvice()
+            expect(str).to.equal("string")
+        })
     })
 })
 
-suite('ChangeBackground() test', () => {
-    test('ChangeBackground() должен вернуть 0', () => {
-        assert(changeBg.create(backgroundImage) === 0, 'Провал')
+describe("Change background test", () => {
+    describe("Testing changeBackground.create()", () => {
+        it("should return zero", () => {
+            const backgroundImage = ['url(/backgrounds/kordan1.jpg)', 'url(/backgrounds/kordan2.jpg)', 'url(/backgrounds/kordan3.jpg)', 'url(/backgrounds/kordan4.jpg)', 'url(/backgrounds/kordan5.jpg)', 'url(/backgrounds/kordan6.jpg)']
+            const zero = changeBackground.create(backgroundImage)
+            expect(zero).to.equal(0)
+        })
+    })
+})
+
+describe("Column test", () => {
+    describe("Testing column.create()", () => {
+        it("should return new column", () => {
+            const typeColumn = typeof Column.create()
+            expect(typeColumn).to.equal("object")
+        })
     })
 })

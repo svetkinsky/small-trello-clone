@@ -7,8 +7,9 @@ const changeBackground = {
 
                 document.querySelector('body').style.background = backgroundImage[randomIndexImg] + ' no-repeat'
             })
+            return 0
         }
-        return
+        return 1
     }
 }
 

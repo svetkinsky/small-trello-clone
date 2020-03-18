@@ -8,10 +8,21 @@ import {
 import {
     Column
 } from './column'
-import response from '../response.json'
-import {
-    Xhr
-} from './xhr'
+// import {
+//     Xhr
+// } from './xhr'
+
+const axios = require('axios')
+
+axios.get('/tasks')
+  .then(function (response) {
+      run(response.data)
+  })
+
+  axios.get('/test')
+  .then(function (response) {
+      console.log('MongoDB data: ', response.data)
+  })
 
 
 
@@ -27,11 +38,11 @@ let editItems = document.querySelectorAll('.edit')
 
 //let respJSON = response 
 
-let respJSON = Xhr.getTasks()
+//let respJSON = Xhr.getTasks()
 
-respJSON.then((data) =>{
-    run(data)
-})
+// respJSON.then((data) =>{
+//     run(data)
+// })
 
 const run = (getTaskData) => {
     console.log('getTaskData: ', getTaskData)

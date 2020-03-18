@@ -61,22 +61,8 @@ app.listen(app.get('port'), (error) => {
 // app.use('/', express.static(__dirname + '/dist')) // 
 
 
-// app.get('/tasks', (rq, rs) => {
-//     const filePath = path.resolve(__dirname, './response.json')
-//     fs.readFile(filePath, (error, data) => {
-//         if (error) {
-//             rs.status('404').send('file not found')
-//         }
-//         rs.type('json').send(data)
-//     })
-//     // rs.send()
-// })
+// 
 
 // 
 
-// app.listen(PORT, (error) => {
-//     if (error) {
-//         throw error
-//     }
-//     console.log(`сервер запущен на порту ${PORT}...`)
-// })
+// 

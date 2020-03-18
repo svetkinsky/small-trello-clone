@@ -104,9 +104,9 @@ const plugins = () => {
         )
     ]
 
-    if(isProd) {
-        base.push(new BundleAnalyzerPlugin())
-    }
+    // if(isProd) {
+    //     base.push(new BundleAnalyzerPlugin())
+    // }
 
     return base
 }
@@ -115,7 +115,6 @@ module.exports = {
     mode: 'development',
     entry: {
         main: ['@babel/polyfill', './src/index.js'],
-        analytics: './src/analytics.ts'
     },
     output: {
         filename: filename('js'),
