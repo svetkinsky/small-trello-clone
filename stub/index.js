@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+const jsonParser = express.json()
 
 
 
@@ -11,31 +12,76 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 
-const tasksSchema = new Schema({
-    id: Number,
-    idParend: Number,
-    text: String
+const DataSchema = new Schema({
+    idTask: Number,
+    contentTask: String,
+    idColumn: Number,
+    columnTitle: String
 })
+const Data = mongoose.model("Data", DataSchema)
+
+
+
+
+app.use(express.static(__dirname + '/dist'))
+
 
 mongoose.connect("mongodb://localhost:27017/usersdb", {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })
 
-const Task = mongoose.model("Tasks", tasksSchema)
-const task = new Task({
-    id: 10,
-    idParend: 36,
-    text: 'abcd'
-});
+app.post('/create', jsonParser, (req, res) => {
+    if (!req.body) return res.sendStatus(400)
 
-task.save(function (err) {
-    if (err) return console.log(err)
-    console.log("Сохранен объект", task)
+    if (req.body.idTask) {
+        Data.create({
+            idTask: req.body.idTask,
+            contentTask: req.body.contentTask,
+            idColumn: req.body.idColumn
+        }, (err, data) => {
+            if (err) return console.log(err)
+            console.log("Сохранена задача", data)
+        })
+    } else {
+        Data.create({
+            idColumn: req.body.idColumn,
+            columnTitle: req.body.columnTitle
+        }, (err, data) => {
+            if (err) return console.log(err)
+            console.log("Сохранена колонка", data)
+        })
+    }
+
+})
+
+app.put('/update', jsonParser, (req, res) => {
+    if (!req.body) return res.sendStatus(400)
+
+    if (req.body.idTask) {
+        Data.updateOne({
+            idTask: req.body.idTask
+        }, {
+            contentTask: req.body.contentTask
+        }, (err, data) => {
+            if (err) return console.log(err)
+            console.log("Обновоена задача", data)
+        })
+    }
+
+    if (req.body.idColumn) {
+        Data.updateOne({
+            idColumn: req.body.idColumn
+        }, {
+            columnTitle: req.body.columnTitle
+        }, (err, data) => {
+            if (err) return console.log(err)
+            console.log("Обновоен заголовок колонки", data)
+        })
+    }
 })
 
 
-app.use(express.static(__dirname + '/dist'))
 
 app.get('/tasks', (rq, rs) => {
     const filePath = path.resolve(__dirname, './response.json')
@@ -50,12 +96,12 @@ app.get('/tasks', (rq, rs) => {
 })
 
 app.get('/test', (rq, rs) => {
-    Task.find({}, function(err, docs){         
-        if(err) return console.log(err)
+    Task.find({}, function (err, docs) {
+        if (err) return console.log(err)
         rs.send(docs)
         console.log(docs)
     });
-  
+
 })
 
 app.listen(PORT, (error) => {

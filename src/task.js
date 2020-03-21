@@ -6,6 +6,7 @@ const Task = {
     idTasks: 13,
     draggingTask: null,
 
+
     //метод создания задачи, по умолчанию id и content нулевые 
     create(id = null, content = '') {
         //если входной id не нулевой, то задаче присваивается он
@@ -20,12 +21,6 @@ const Task = {
         newTask.innerHTML = content
 
         Task.idTasks++
-        //фокус на добавленную задачу 
-
-        //newTask.setAttribute('contenteditable', 'true')
-        newTask.addEventListener('blur', () => {
-            newTask.removeAttribute('contenteditable')
-        })
 
         Task.eventEdit(newTask)
         Task.addDragEndDropEventToTask(newTask)
@@ -44,6 +39,7 @@ const Task = {
 
     eventEdit(element) {
         //контент задачи до изменения
+        const axios = require('axios')
         let contentBeforeEdit = ''
         element.addEventListener('dblclick', () => {
             contentBeforeEdit = element.innerHTML
@@ -52,19 +48,25 @@ const Task = {
         })
         element.addEventListener('blur', () => {
             //контент задачи после изменения
-            const content = element.innerHTM
+            const contentAfterEdit = element.innerHTM
 
-            if (contentBeforeEdit !== content) {
+            if (contentBeforeEdit !== contentAfterEdit) {
                 const id = element.getAttribute('data-task-id')
                 const idParent = element.closest('.column').getAttribute('data-column-id')
 
-                const body = JSON.stringify({
-                    "id": id,
-                    "content": content,
-                    "idParent": idParent
-                })
+                axios.put('/update', {
+                        idTask: id,
+                        contentTask: contentAfterEdit
+                    }).then(response => console.log(response))
+                    .catch(error => console.log(error))
+
+                // const body = JSON.stringify({
+                //     "id": id,
+                //     "content": content,
+                //     "idParent": idParent
+                // })
                 //отправка запроса
-                Xhr.sendTaskRequest('/submit', 'POST', body)
+                // Xhr.sendTaskRequest('/submit', 'POST', body)
             }
 
 

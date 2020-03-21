@@ -4,6 +4,10 @@ import {
 import {
     Xhr
 } from './xhr'
+import {
+    request,
+    response
+} from 'express'
 
 const Column = {
     idColumns: 4,
@@ -19,7 +23,7 @@ const Column = {
         const newColumnHead = document.createElement('div')
         const newColumnButton = document.createElement('button')
         const newList = document.createElement('div')
-    
+
         newColumn.classList.add('column')
         newColumnHead.classList.add('board-body-head', 'edit')
         newList.classList.add('list')
@@ -36,15 +40,15 @@ const Column = {
         newColumn.append(newList)
         newColumn.append(newColumnButton)
 
-        Column.eventEdit(newColumnHead) 
+        Column.eventEdit(newColumnHead)
         Column.addTasks(newColumn)
         Column.addDragEndDropEventToColumn(newColumn)
 
         return newColumn
-       
+
     },
 
-    
+
 
     eventEdit(element) {
         //контент заголовка колонки до изменения
@@ -56,20 +60,31 @@ const Column = {
         })
         element.addEventListener('blur', () => {
             //контент заголовка колонки после изменения
-            const title = element.innerHTML
+            const axios = require('axios')
+            const titleAfterEdit = element.innerHTML
 
             //удаление атрибута contenteditable после убирания фокуса
             element.removeAttribute('contenteditable')
 
             //проверка было ли изменение заголовка колонки
-            if (titleBeforeEdit !== title) {
+            if (titleBeforeEdit !== titleAfterEdit) {
                 const id = element.closest('.column').getAttribute('data-column-id')
 
+                axios.put('/update', {
+                        idColumn: id,
+                        columnTitle: titleAfterEdit
+                    }).then(response => console.log(response))
+                    .catch(error => console.log(error))
+
+
                 //формирование body для передачи в запрос
-                const body = JSON.stringify({"id": id, "title": title})
+                // const body = JSON.stringify({
+                //     "id": id,
+                //     "title": titleAfterEdit
+                // })
 
                 //отправка запроса
-                Xhr.sendTaskRequest('/submit', 'POST', body)
+                // Xhr.sendTaskRequest('/submit', 'POST', body)
             }
         })
     },
@@ -77,6 +92,8 @@ const Column = {
 
 
     addTasks(element) {
+        const axios = require('axios')
+        //добавление новой задачи по нажатию кнопки "добавьте задачу"
         const buttonAdd = element.querySelector('.tast-add')
         buttonAdd.addEventListener('click', function (event) {
             const list = element.querySelector('.list')
@@ -84,8 +101,21 @@ const Column = {
             list.append(Task.create(++Column.maxIdTask))
 
             //фокус на добавленную задачу 
+
+            list.lastChild.setAttribute('contenteditable', 'true')
             list.lastChild.focus()
-            console.log('Max Id of tasks: ', Column.maxIdTask)
+            list.lastChild.addEventListener('blur', () => {
+                list.lastChild.removeAttribute('contenteditable')
+                axios.post('/create', {
+                        idTask: list.lastChild.getAttribute('data-task-id'),
+                        contentTask: list.lastChild.innerHTML,
+                        idColumn: list.parentElement.getAttribute('data-column-id')
+                    }).then(response => console.log(response))
+                    .catch(error => console.log(error))
+
+            })
+
+            //console.log('Max Id of tasks: ', Column.maxIdTask)
         })
 
     },
