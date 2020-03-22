@@ -80,6 +80,7 @@ const Column = {
 
 
     addTasks(element) {
+        const axios = require('axios')
         const buttonAdd = element.querySelector('.tast-add')
         buttonAdd.addEventListener('click', function (event) {
             const list = element.querySelector('.list')
@@ -87,10 +88,17 @@ const Column = {
             list.append(Task.create(++Column.maxIdTask))
 
             //фокус на добавленную задачу 
-            list.lastChild.setAttribute('contenteditable', 'true')
-            list.lastChild.focus()
-            list.lastChild.addEventListener('blur', () => {
-                list.lastChild.removeAttribute('contenteditable')
+            const lastTask = list.lastChild
+            lastTask.setAttribute('contenteditable', 'true')
+            lastTask.focus()
+            lastTask.addEventListener('blur', () => {
+                lastTask.removeAttribute('contenteditable')
+                axios.post('/create', {
+                        idTask: lastTask.getAttribute('data-task-id'),
+                        contentTAsk: lastTask.innerHTML,
+                        idColumn: list.parentElement.getAttribute('data-column-id')
+                    }).then(response => console.log(response))
+                    .catch(error => console.log(error))
             })
             //console.log('Max Id of tasks: ', Column.maxIdTask)
         })

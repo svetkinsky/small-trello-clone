@@ -107,6 +107,12 @@ const run = (getTaskData) => {
         lastColumnTitle.focus()
         lastColumnTitle.addEventListener('blur', () => {
             lastColumnTitle.removeAttribute('contenteditable')
+
+            axios.post('/create', {
+                    idColumn: lastColumnTitle.parentElement.getAttribute('data-column-id'),
+                    columnTitle: lastColumnTitle.innerHTML
+                }).then(response => console.log(response))
+                .catch(error => console.log(error))
         })
         //console.log('maxIdColumnCandidate: ', maxIdColumnCandidate)
     })
