@@ -19,7 +19,7 @@ const Column = {
         const newColumnHead = document.createElement('div')
         const newColumnButton = document.createElement('button')
         const newList = document.createElement('div')
-    
+
         newColumn.classList.add('column')
         newColumnHead.classList.add('board-body-head', 'edit')
         newList.classList.add('list')
@@ -36,15 +36,15 @@ const Column = {
         newColumn.append(newList)
         newColumn.append(newColumnButton)
 
-        Column.eventEdit(newColumnHead) 
+        Column.eventEdit(newColumnHead)
         Column.addTasks(newColumn)
         Column.addDragEndDropEventToColumn(newColumn)
 
         return newColumn
-       
+
     },
 
-    
+
 
     eventEdit(element) {
         //контент заголовка колонки до изменения
@@ -66,7 +66,10 @@ const Column = {
                 const id = element.closest('.column').getAttribute('data-column-id')
 
                 //формирование body для передачи в запрос
-                const body = JSON.stringify({"id": id, "title": title})
+                const body = JSON.stringify({
+                    "id": id,
+                    "title": title
+                })
 
                 //отправка запроса
                 Xhr.sendTaskRequest('/submit', 'POST', body)
@@ -84,8 +87,12 @@ const Column = {
             list.append(Task.create(++Column.maxIdTask))
 
             //фокус на добавленную задачу 
+            list.lastChild.setAttribute('contenteditable', 'true')
             list.lastChild.focus()
-            console.log('Max Id of tasks: ', Column.maxIdTask)
+            list.lastChild.addEventListener('blur', () => {
+                list.lastChild.removeAttribute('contenteditable')
+            })
+            //console.log('Max Id of tasks: ', Column.maxIdTask)
         })
 
     },

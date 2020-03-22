@@ -1,7 +1,9 @@
 import './styles/scss.scss'
 //import './xhr'
 
-import {changeBackground} from './changeBackground'
+import {
+    changeBackground
+} from './changeBackground'
 import {
     Task
 } from './task'
@@ -15,14 +17,14 @@ import {
 const axios = require('axios')
 
 axios.get('/tasks')
-  .then(function (response) {
-      run(response.data)
-  })
+    .then(function (response) {
+        run(response.data)
+    })
 
-  axios.get('/test')
-  .then(function (response) {
-      console.log('MongoDB data: ', response.data)
-  })
+axios.get('/test')
+    .then(function (response) {
+        console.log('MongoDB data: ', response.data)
+    })
 
 
 
@@ -75,14 +77,6 @@ const run = (getTaskData) => {
         //массив задач текущей колонки
         const tasks = column.tasks || []
 
-
-        //*****************Пришлось сделать ДВА цикла, чтобы в строку 72 передался нужный maxIdTaskCandidate*/
-        //*****************это навеоное тоже нехорошо? */
-        // tasks.forEach((taskElement) => {
-        //         if (maxIdTaskCandidate < taskElement.id) {
-        //             maxIdTaskCandidate = taskElement.id
-        //         }
-        //     })
         const newColumn = Column.create(column.id, column.name)
         //перебор массива задач для добавления их в колонку
         tasks.forEach((taskElement) => {
@@ -108,8 +102,13 @@ const run = (getTaskData) => {
         columnList.append(Column.create(++maxIdColumnCandidate))
 
         //фокус на заголовке новой колонки
-        columnList.lastChild.querySelector('.board-body-head').focus()
-        console.log('maxIdColumnCandidate: ', maxIdColumnCandidate)
+        const lastColumnTitle = columnList.lastChild.querySelector('.board-body-head')
+        lastColumnTitle.setAttribute('contenteditable', 'true')
+        lastColumnTitle.focus()
+        lastColumnTitle.addEventListener('blur', () => {
+            lastColumnTitle.removeAttribute('contenteditable')
+        })
+        //console.log('maxIdColumnCandidate: ', maxIdColumnCandidate)
     })
 
 
