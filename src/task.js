@@ -58,13 +58,13 @@ const Task = {
                 const id = element.getAttribute('data-task-id')
                 const idParent = element.closest('.column').getAttribute('data-column-id')
 
-                const body = JSON.stringify({
-                    "id": id,
-                    "content": content,
-                    "idParent": idParent
-                })
+                // const body = JSON.stringify({
+                //     "id": id,
+                //     "content": content,
+                //     "idParent": idParent
+                // })
                 //отправка запроса
-                Xhr.sendTaskRequest('/submit', 'POST', body)
+                // Xhr.sendTaskRequest('/submit', 'POST', body)
             }
 
 

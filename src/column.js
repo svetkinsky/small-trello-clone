@@ -66,13 +66,13 @@ const Column = {
                 const id = element.closest('.column').getAttribute('data-column-id')
 
                 //формирование body для передачи в запрос
-                const body = JSON.stringify({
-                    "id": id,
-                    "title": title
-                })
+                // const body = JSON.stringify({
+                //     "id": id,
+                //     "title": title
+                // })
 
                 //отправка запроса
-                Xhr.sendTaskRequest('/submit', 'POST', body)
+                //Xhr.sendTaskRequest('/submit', 'POST', body)
             }
         })
     },
@@ -95,7 +95,7 @@ const Column = {
                 lastTask.removeAttribute('contenteditable')
                 axios.post('/create', {
                         idTask: lastTask.getAttribute('data-task-id'),
-                        contentTAsk: lastTask.innerHTML,
+                        contentTask: lastTask.innerHTML,
                         idColumn: list.parentElement.getAttribute('data-column-id')
                     }).then(response => console.log(response))
                     .catch(error => console.log(error))

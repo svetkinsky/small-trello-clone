@@ -76,14 +76,14 @@ app.get('/tasks', (rq, rs) => {
     // rs.send()
 })
 
-app.get('/test', (rq, rs) => {
-    Task.find({}, function (err, docs) {
-        if (err) return console.log(err)
-        rs.send(docs)
-        console.log(docs)
-    });
+// app.get('/test', (rq, rs) => {
+//     Task.find({}, function (err, docs) {
+//         if (err) return console.log(err)
+//         rs.send(docs)
+//         console.log(docs)
+//     });
 
-})
+// })
 
 app.listen(PORT, (error) => {
     if (error) {

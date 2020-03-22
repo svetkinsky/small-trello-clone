@@ -21,10 +21,10 @@ axios.get('/tasks')
         run(response.data)
     })
 
-axios.get('/test')
-    .then(function (response) {
-        console.log('MongoDB data: ', response.data)
-    })
+// axios.get('/test')
+//     .then(function (response) {
+//         console.log('MongoDB data: ', response.data)
+//     })
 
 
 
