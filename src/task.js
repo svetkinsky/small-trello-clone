@@ -1,6 +1,9 @@
 import {
     Xhr
 } from './xhr'
+import {
+    response
+} from 'express'
 
 const Task = {
     idTasks: 13,
@@ -43,6 +46,7 @@ const Task = {
 
 
     eventEdit(element) {
+        const axios = require('axios')
         //контент задачи до изменения
         let contentBeforeEdit = ''
         element.addEventListener('dblclick', () => {
@@ -52,19 +56,17 @@ const Task = {
         })
         element.addEventListener('blur', () => {
             //контент задачи после изменения
-            const content = element.innerHTM
+            const contentAfterEdit = element.innerHTM
 
-            if (contentBeforeEdit !== content) {
+            if (contentBeforeEdit !== contentAfterEdit) {
                 const id = element.getAttribute('data-task-id')
                 const idParent = element.closest('.column').getAttribute('data-column-id')
 
-                // const body = JSON.stringify({
-                //     "id": id,
-                //     "content": content,
-                //     "idParent": idParent
-                // })
-                //отправка запроса
-                // Xhr.sendTaskRequest('/submit', 'POST', body)
+                axios.post('/update', {
+                    idTask: id,
+                    contentTask: contentAfterEdit
+                }).then(response => console.log(response))
+
             }
 
 
