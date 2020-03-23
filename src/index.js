@@ -110,7 +110,7 @@ const run = (getTaskData) => {
 
             axios.post('/create', {
                     idColumn: lastColumnTitle.parentElement.getAttribute('data-column-id'),
-                    columnTitle: lastColumnTitle.innerHTML
+                    titleColumn: lastColumnTitle.innerHTML
                 }).then(response => console.log(response))
                 .catch(error => console.log(error))
         })
