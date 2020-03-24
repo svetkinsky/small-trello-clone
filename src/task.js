@@ -1,6 +1,10 @@
 import {
     Xhr
 } from './xhr'
+import {
+    Column
+} from './column'
+
 
 const Task = {
     idTasks: 13,
@@ -20,17 +24,14 @@ const Task = {
         newTask.innerHTML = content
 
         Task.idTasks++
-        //фокус на добавленную задачу 
 
-        //newTask.setAttribute('contenteditable', 'true')
-        newTask.addEventListener('blur', () => {
-            newTask.removeAttribute('contenteditable')
-        })
-
+        // console.log('Column.addTask', Column.addTask)
         Task.eventEdit(newTask)
+
         Task.addDragEndDropEventToTask(newTask)
 
         //console.log(Task.idTasks)
+
 
         return newTask
     },
@@ -43,28 +44,30 @@ const Task = {
 
 
     eventEdit(element) {
+        const axios = require('axios')
         //контент задачи до изменения
         let contentBeforeEdit = ''
         element.addEventListener('dblclick', () => {
+            Task.edit = true
             contentBeforeEdit = element.innerHTML
             element.setAttribute('contenteditable', true)
             element.focus()
         })
         element.addEventListener('blur', () => {
             //контент задачи после изменения
-            const content = element.innerHTM
+            element.removeAttribute('contenteditable')
+            const contentAfterEdit = element.innerHTM
 
-            if (contentBeforeEdit !== content) {
+            if (contentBeforeEdit !== contentAfterEdit) {
                 const id = element.getAttribute('data-task-id')
                 const idParent = element.closest('.column').getAttribute('data-column-id')
-
-                // const body = JSON.stringify({
-                //     "id": id,
-                //     "content": content,
-                //     "idParent": idParent
-                // })
-                //отправка запроса
-                // Xhr.sendTaskRequest('/submit', 'POST', body)
+                if (Task.edit) {
+                    axios.put('/update', {
+                            idTask: id,
+                            contentTask: contentAfterEdit
+                        }).then(response => console.log(response))
+                        .catch(error => console.log(error))
+                }
             }
 
 

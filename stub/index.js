@@ -53,6 +53,33 @@ app.post('/create', jsonParser, (req, res) => {
     }
 })
 
+app.put('/update', jsonParser, (req, res) => {
+    if (!req.body) return res.sendStatus(400)
+
+    if (req.body.idTask) {
+        Data.updateOne({
+            idTask: req.body.idTask
+        }, {
+            contentTask: req.body.contentTask
+        }, (err, data) => {
+            if (err) return console.log(err)
+            res.send(data)
+            console.log('Обновоена задача', data)
+        })
+    }
+    if (req.body.idColumn) {
+        Data.updateOne({
+            idColumn: req.body.idColumn
+        }, {
+            titleColumn: req.body.titleColumn
+        }, (err, data) => {
+            if (err) return console.log(err)
+            res.send(data)
+            console.log('Обновоен заголовок колонки', data)
+        })
+    }
+})
+
 
 
 

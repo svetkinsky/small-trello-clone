@@ -35,6 +35,7 @@ changeBackground.create(backgroundImage)
 let columnAdd = document.querySelector('.column-add')
 let columns = document.querySelectorAll('.column')
 let editItems = document.querySelectorAll('.edit')
+//console.log('EDIT ITEMS: ', editItems)
 
 
 
@@ -121,21 +122,21 @@ const run = (getTaskData) => {
 
 
     //функция редактирования задач и заголовков колонок
-    const eventEdit = element => {
-        element.addEventListener('dblclick', () => {
-            element.setAttribute('contenteditable', true)
-            element.focus()
-        })
-        element.addEventListener('blur', () => {
-            element.removeAttribute('contenteditable')
-        })
+    // const eventEdit = element => {
+    //     element.addEventListener('dblclick', () => {
+    //         element.setAttribute('contenteditable', true)
+    //         element.focus()
+    //     })
+    //     element.addEventListener('blur', () => {
+    //         element.removeAttribute('contenteditable')
+    //     })
 
 
-    }
+    // }
 
 
-    //навешивание релактирования на каждый элемент с классом edit
-    editItems.forEach(eventEdit)
+    //навешивание редактирования на каждый элемент с классом edit
+    // editItems.forEach(eventEdit)
 
     //навешивание drug&drop на все задачи
     document.querySelectorAll('[data-task-id]').forEach(Task.addDragEndDropEventToTask)
