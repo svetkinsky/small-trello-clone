@@ -109,11 +109,13 @@ const run = (getTaskData) => {
         lastColumnTitle.addEventListener('blur', () => {
             lastColumnTitle.removeAttribute('contenteditable')
 
-            axios.post('/create', {
-                    idColumn: lastColumnTitle.parentElement.getAttribute('data-column-id'),
-                    titleColumn: lastColumnTitle.innerHTML
-                }).then(response => console.log(response))
-                .catch(error => console.log(error))
+            if (!Column.edit) {
+                axios.post('/create', {
+                        idColumn: lastColumnTitle.parentElement.getAttribute('data-column-id'),
+                        titleColumn: lastColumnTitle.innerHTML
+                    }).then(response => console.log(response))
+                    .catch(error => console.log(error))
+            }
         })
         //console.log('maxIdColumnCandidate: ', maxIdColumnCandidate)
     })

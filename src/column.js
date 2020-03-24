@@ -10,6 +10,7 @@ const Column = {
     draggingColumn: null,
     maxIdTask: 0,
     addTask: false,
+    edit: false,
 
 
     create(id = null, content = '') {
@@ -56,6 +57,7 @@ const Column = {
             titleBeforeEdit = element.innerHTML
             element.setAttribute('contenteditable', true)
             element.focus()
+            Column.edit = true
         })
         element.addEventListener('blur', () => {
             //контент заголовка колонки после изменения
@@ -68,11 +70,13 @@ const Column = {
             if (titleBeforeEdit !== titleAfterEdit) {
                 const id = element.closest('.column').getAttribute('data-column-id')
 
-                axios.put('/update', {
-                        idColumn: id,
-                        titleColumn: titleAfterEdit
-                    }).then(response => console.log(response))
-                    .catch(error => console.log(error))
+                if (Column.edit) {
+                    axios.put('/update', {
+                            idColumn: id,
+                            titleColumn: titleAfterEdit
+                        }).then(response => console.log(response))
+                        .catch(error => console.log(error))
+                }
             }
         })
     },

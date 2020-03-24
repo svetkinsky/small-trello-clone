@@ -9,6 +9,7 @@ import {
 const Task = {
     idTasks: 13,
     draggingTask: null,
+    edit: false,
 
     //метод создания задачи, по умолчанию id и content нулевые 
     create(id = null, content = '') {
