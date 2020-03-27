@@ -18,8 +18,8 @@ const axios = require('axios')
 
 axios.get('/tasks')
     .then(function (response) {
-        run(response.data)
-    })
+        run(response)
+    }).catch(error => console.log(error))
 
 // axios.get('/test')
 //     .then(function (response) {
@@ -49,12 +49,13 @@ let editItems = document.querySelectorAll('.edit')
 
 const run = (getTaskData) => {
     console.log('getTaskData: ', getTaskData)
+    console.log('type of getTaskData: ', typeof getTaskData.data)
 
     const columnList = document.querySelector('.column-list')
 
 
     //проверка на "ошибки"
-    if (getTaskData.status.code !== 0) {
+    if (getTaskData.status !== 0) {
         console.log('Error')
     }
 
@@ -62,7 +63,7 @@ const run = (getTaskData) => {
 
 
     //массив колонок с "бэка"
-    const content = getTaskData.content || []
+    const content = getTaskData //.content || []
 
     //максимальные id колонки и задачи
     let maxIdTaskCandidate = 0
@@ -103,7 +104,11 @@ const run = (getTaskData) => {
         columnList.append(Column.create(++maxIdColumnCandidate))
 
         //фокус на заголовке новой колонки
-        const lastColumnTitle = columnList.lastChild.querySelector('.board-body-head')
+        const lastColumnHead = columnList.lastChild.querySelector('.column-header')
+        const lastColumnTitle = lastColumnHead.querySelector('.column-title')
+
+        console.log(lastColumnHead)
+
         lastColumnTitle.setAttribute('contenteditable', 'true')
         lastColumnTitle.focus()
         lastColumnTitle.addEventListener('blur', () => {
@@ -123,28 +128,20 @@ const run = (getTaskData) => {
 
 
 
-    //функция редактирования задач и заголовков колонок
-    // const eventEdit = element => {
-    //     element.addEventListener('dblclick', () => {
-    //         element.setAttribute('contenteditable', true)
-    //         element.focus()
-    //     })
-    //     element.addEventListener('blur', () => {
-    //         element.removeAttribute('contenteditable')
-    //     })
+    //let  = false
 
 
-    // }
+    //навешивание drug&drop на все задачи и запрос на удаление
+    document.querySelectorAll('[data-task-id]').forEach((task) => {
+        Task.addDragEndDropEventToTask
+        Task.contextMenuEvent(task)
+    })
 
-
-    //навешивание редактирования на каждый элемент с классом edit
-    // editItems.forEach(eventEdit)
-
-    //навешивание drug&drop на все задачи
-    document.querySelectorAll('[data-task-id]').forEach(Task.addDragEndDropEventToTask)
-
-    //навешивание drug&drop на все колонки
-    document.querySelectorAll('[data-column-id]').forEach(Column.addDragEndDropEventToColumn)
-
+    //навешивание drug&drop на все колонки и запрос на удаление
+    document.querySelectorAll('[data-column-id]').forEach((column) => {
+        Column.addDragEndDropEventToColumn
+        const columnTitle = column.querySelector('.column-header')
+        Task.contextMenuEvent(columnTitle)
+    })
 
 }

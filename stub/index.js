@@ -56,7 +56,7 @@ app.post('/create', jsonParser, (req, res) => {
 app.put('/update', jsonParser, (req, res) => {
     if (!req.body) return res.sendStatus(400)
 
-    if (req.body.idTask) {
+    if (req.body.idTask && !req.body.idColumn) {
         Data.updateOne({
             idTask: req.body.idTask
         }, {
@@ -64,7 +64,18 @@ app.put('/update', jsonParser, (req, res) => {
         }, (err, data) => {
             if (err) return console.log(err)
             res.send(data)
-            console.log('Обновоена задача', data)
+            console.log('Обновоена задача.', data)
+        })
+    }
+    if (req.body.idTask && req.body.idColumn) {
+        Data.updateOne({
+            idTask: req.body.idTask
+        }, {
+            idColumn: req.body.idColumn
+        }, (err, data) => {
+            if (err) return console.log(err)
+            res.send(data)
+            console.log('Перенесена задача.', data)
         })
     }
     if (req.body.idColumn) {
@@ -75,33 +86,45 @@ app.put('/update', jsonParser, (req, res) => {
         }, (err, data) => {
             if (err) return console.log(err)
             res.send(data)
-            console.log('Обновоен заголовок колонки', data)
+            console.log('Обновоен заголовок колонки.', data)
         })
     }
+
 })
 
 
-
-
-// task.save(function (err) {
-//     if (err) return console.log(err)
-//     console.log("Сохранен объект", task)
-// })
-
-
-
-
-app.get('/tasks', (rq, rs) => {
-    const filePath = path.resolve(__dirname, './response.json')
-    console.log(chalk.blue('filePath', filePath))
-    fs.readFile(filePath, (error, data) => {
-        if (error) {
-            rs.status('404').send('file not found')
-        }
-        rs.type('json').send(data)
+app.delete('/remove', (req, res) => {
+    console.log('REQUEST BODY', req.params.idTask)
+    // if (req.params.idTask) {
+    Data.remove({
+        idTask: req.params.idTask
+    }, (err, result) => {
+        if (err) return console.log(err)
+        res.send(result)
+        console.log('Удалена задача ', result)
     })
-    // rs.send()
+    // }
 })
+
+app.get('/tasks', (req, res) => {
+    Data.find({}, (err, data) => {
+        if (err) return console.log(err)
+        res.type('json').send(data)
+    })
+})
+
+
+// app.get('/tasks', (rq, rs) => {
+//     const filePath = path.resolve(__dirname, './response.json')
+//     console.log(chalk.blue('filePath', filePath))
+//     fs.readFile(filePath, (error, data) => {
+//         if (error) {
+//             rs.status('404').send('file not found')
+//         }
+//         rs.type('json').send(data)
+//     })
+//     // rs.send()
+// })
 
 // app.get('/test', (rq, rs) => {
 //     Task.find({}, function (err, docs) {

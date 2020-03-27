@@ -26,6 +26,14 @@ const Task = {
 
         Task.idTasks++
 
+        const contextMenu = document.createElement('span')
+        contextMenu.classList.add('pop-over')
+        contextMenu.innerHTML = 'Удалить'
+        newTask.append(contextMenu)
+
+        Task.contextMenuEvent(newTask, false)
+
+
         // console.log('Column.addTask', Column.addTask)
         Task.eventEdit(newTask)
 
@@ -38,9 +46,36 @@ const Task = {
     },
 
 
-    contentEditSendRequest(element, contentBeforeEdit, contentAfterEdit, body) {
-        // let contentBeforeEdit = element.innerHTML
+    contextMenuEvent(element, column) {
 
+        const axios = require('axios')
+        element.addEventListener('contextmenu', (event) => {
+            event.preventDefault()
+
+            let contextMenu = element.querySelector('.pop-over')
+
+            const showMenu = (x, y) => {
+                contextMenu.style.left = x + 'px'
+                contextMenu.style.top = y + 'px'
+                contextMenu.style.display = 'inline'
+            }
+
+            showMenu(event.pageX, event.pageY)
+            console.log(`X: ${event.pageX} Y: ${event.pageY}`)
+
+            contextMenu.addEventListener('click', () => {
+                axios.delete('/remove', {
+                        params: {
+                            idTask: element.getAttribute('data-task-id')
+                        }
+                    }).then(response => console.log(response))
+                    .catch(error => console.log(error))
+
+                if (column) {
+                    element.parentElement.remove()
+                } else element.remove()
+            })
+        })
     },
 
 
@@ -71,14 +106,7 @@ const Task = {
                 }
             }
 
-
-            //удаление атрибута contenteditable после убирания фокуса
-            element.removeAttribute('contenteditable')
-
-
         })
-
-
     },
 
 
@@ -127,6 +155,7 @@ const Task = {
     },
 
     eventDropTask(event) {
+        const axios = require('axios')
         event.stopPropagation()
         this.classList.remove('half-visible')
         if (this !== Task.draggingTask) {
@@ -142,9 +171,17 @@ const Task = {
                 }
             } else {
                 this.parentElement.insertBefore(Task.draggingTask, this)
+                if (Task.draggingTask) {
+                    axios.put('/update', {
+                            idTask: Task.draggingTask.getAttribute('data-task-id'),
+                            idColumn: this.parentElement.parentElement.getAttribute('data-column-id')
+                        }).then(response => console.log(response))
+                        .catch(error => console.log(error))
+                }
             }
         }
     },
+
 
 }
 
