@@ -23,11 +23,6 @@ const Column = {
         const newList = document.createElement('div')
         const newColumnTitle = document.createElement('div')
         const newColumnHeadButton = document.createElement('span')
-        // const newColumnPopover = document.createElement('div')
-        // const popoverList = document.createElement('ul')
-        // const deleteTaskItem = document.createElement('li')
-        // const deleteColumnItem = document.createElement('li')
-
 
         newColumn.classList.add('column')
         newColumnHead.classList.add('column-header')
@@ -44,26 +39,16 @@ const Column = {
         newColumnTitle.innerHTML = content
         newColumnHeadButton.innerHTML = '...'
 
-        const contextMenu = document.createElement('span')
-        contextMenu.classList.add('pop-over')
-        contextMenu.innerHTML = 'Удалить'
-        newColumnHead.append(contextMenu)
-
-        Task.contextMenuEvent(newColumnHead, true)
-
-
         newColumnHead.append(newColumnTitle)
         newColumnHead.append(newColumnHeadButton)
-        // newColumnHead.append(newColumnPopover)
-
         newColumn.append(newColumnHead)
         newColumn.append(newList)
         newColumn.append(newColumnButton)
 
         Column.eventEdit(newColumnHead)
-
         Column.addTasks(newColumn)
         Column.addDragEndDropEventToColumn(newColumn)
+        Task.contextMenuEvent(newColumn, true)
 
         return newColumn
 
@@ -124,7 +109,7 @@ const Column = {
                     axios.post('/create', {
                             idTask: lastTask.getAttribute('data-task-id'),
                             contentTask: lastTask.innerHTML,
-                            idColumn: list.parentElement.getAttribute('data-column-id')
+                            idParent: list.parentElement.getAttribute('data-column-id')
                         }).then(response => console.log(response))
                         .catch(error => console.log(error))
                 }

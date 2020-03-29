@@ -26,56 +26,66 @@ const Task = {
 
         Task.idTasks++
 
-        const contextMenu = document.createElement('span')
-        contextMenu.classList.add('pop-over')
-        contextMenu.innerHTML = 'Удалить'
-        newTask.append(contextMenu)
-
         Task.contextMenuEvent(newTask, false)
-
-
-        // console.log('Column.addTask', Column.addTask)
         Task.eventEdit(newTask)
-
         Task.addDragEndDropEventToTask(newTask)
-
-        //console.log(Task.idTasks)
-
 
         return newTask
     },
 
 
-    contextMenuEvent(element, column) {
+    contextMenuEvent(element, columnFlag) {
 
         const axios = require('axios')
+        let contextMenu = document.querySelector('.pop-over')
+
+        const showMenu = (x, y) => {
+            contextMenu.style.left = x + 'px'
+            contextMenu.style.top = y + 'px'
+            contextMenu.style.display = 'inline'
+        }
+
+        const hideMenu = () => {
+            contextMenu.style.display = 'none'
+        }
+
         element.addEventListener('contextmenu', (event) => {
+            console.log('CONTEXT MENU EVENT')
             event.preventDefault()
-
-            let contextMenu = element.querySelector('.pop-over')
-
-            const showMenu = (x, y) => {
-                contextMenu.style.left = x + 'px'
-                contextMenu.style.top = y + 'px'
-                contextMenu.style.display = 'inline'
-            }
-
             showMenu(event.pageX, event.pageY)
-            console.log(`X: ${event.pageX} Y: ${event.pageY}`)
-
+            event.stopPropagation()
             contextMenu.addEventListener('click', () => {
-                axios.delete('/remove', {
-                        params: {
-                            idTask: element.getAttribute('data-task-id')
-                        }
-                    }).then(response => console.log(response))
-                    .catch(error => console.log(error))
+                if (!columnFlag) {
+                    element.remove()
+                    hideMenu()
+                    console.log('Task removed', columnFlag)
+                    axios.delete('/remove', {
+                            params: {
+                                idTask: element.getAttribute('data-task-id')
+                            }
+                        }).then(response => console.log(response))
+                        .catch(error => console.log(error))
+                } else {
+                    element.remove()
+                    hideMenu()
+                    console.log('Column removed', columnFlag)
+                    axios.delete('/remove', {
+                            params: {
+                                idColumn: element.getAttribute('data-column-id')
+                            }
+                        }).then(response => console.log(response))
+                        .catch(error => console.log(error))
+                }
 
-                if (column) {
-                    element.parentElement.remove()
-                } else element.remove()
+
             })
+            document.addEventListener('click', () => {
+                hideMenu()
+            })
+
         })
+
+
     },
 
 

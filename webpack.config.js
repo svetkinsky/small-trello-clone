@@ -11,7 +11,7 @@ const {
     BundleAnalyzerPlugin
 } = require('webpack-bundle-analyzer')
 
-const isDev = process.env.NODE_ENV === 'development'
+const isDev = true //process.env.NODE_ENV === 'development'
 const isProd = !isDev
 
 const optimization = () => {
@@ -133,7 +133,7 @@ module.exports = {
         port: 4300,
         hot: isDev,
     },
-    devtool: isDev ? 'source-map' : '',
+    devtool: isDev ? 'source-map' : '', //исходный код в браузере
     plugins: plugins(),
 
     module: {

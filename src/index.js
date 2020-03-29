@@ -16,9 +16,9 @@ import {
 
 const axios = require('axios')
 
-axios.get('/tasks')
+axios.get('/get')
     .then(function (response) {
-        run(response)
+        run(response.data)
     }).catch(error => console.log(error))
 
 // axios.get('/test')
@@ -49,21 +49,31 @@ let editItems = document.querySelectorAll('.edit')
 
 const run = (getTaskData) => {
     console.log('getTaskData: ', getTaskData)
-    console.log('type of getTaskData: ', typeof getTaskData.data)
+    console.log('type of getTaskData.data: ', typeof getTaskData.data)
 
     const columnList = document.querySelector('.column-list')
 
-
     //проверка на "ошибки"
-    if (getTaskData.status !== 0) {
-        console.log('Error')
+    if (getTaskData.status == 0) {
+        console.log('Error: ', getTaskData.status)
     }
 
-
-
+    // console.log('Get Data Status: ', getTaskData.status)
 
     //массив колонок с "бэка"
-    const content = getTaskData //.content || []
+    const content = getTaskData.content || []
+    // const content = getTaskData.data || []
+
+    const contentTasks = []
+    const contentColumns = []
+
+    content.forEach(data => {
+        //console.log('DATA idTask', data.idTask)
+        // console.log('DATA idColumn', data.idColumn)
+        if (data.idTask) contentTasks.push(data)
+
+    })
+    console.log('TASK ARRAY: ', contentTasks)
 
     //максимальные id колонки и задачи
     let maxIdTaskCandidate = 0
@@ -115,8 +125,9 @@ const run = (getTaskData) => {
             lastColumnTitle.removeAttribute('contenteditable')
 
             if (!Column.edit) {
+                console.log('Last Column ID', lastColumnHead.parentElement.getAttribute('data-column-id'))
                 axios.post('/create', {
-                        idColumn: lastColumnTitle.parentElement.getAttribute('data-column-id'),
+                        idColumn: lastColumnHead.parentElement.getAttribute('data-column-id'),
                         titleColumn: lastColumnTitle.innerHTML
                     }).then(response => console.log(response))
                     .catch(error => console.log(error))
@@ -132,16 +143,13 @@ const run = (getTaskData) => {
 
 
     //навешивание drug&drop на все задачи и запрос на удаление
-    document.querySelectorAll('[data-task-id]').forEach((task) => {
+    document.querySelectorAll('[data-task-id]').forEach(
         Task.addDragEndDropEventToTask
-        Task.contextMenuEvent(task)
-    })
+    )
 
     //навешивание drug&drop на все колонки и запрос на удаление
-    document.querySelectorAll('[data-column-id]').forEach((column) => {
+    document.querySelectorAll('[data-column-id]').forEach(
         Column.addDragEndDropEventToColumn
-        const columnTitle = column.querySelector('.column-header')
-        Task.contextMenuEvent(columnTitle)
-    })
+    )
 
 }
