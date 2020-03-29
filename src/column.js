@@ -4,6 +4,9 @@ import {
 import {
     Xhr
 } from './xhr'
+import {
+    ContextMenuEvent
+} from './contextMenuEvent'
 
 const Column = {
     idColumns: 4,
@@ -48,7 +51,7 @@ const Column = {
         Column.eventEdit(newColumnHead)
         Column.addTasks(newColumn)
         Column.addDragEndDropEventToColumn(newColumn)
-        Task.contextMenuEvent(newColumn, true)
+        ContextMenuEvent.handler(newColumn, true)
 
         return newColumn
 

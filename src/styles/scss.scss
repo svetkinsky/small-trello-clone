@@ -255,6 +255,10 @@ body {
     position: absolute;
     cursor: pointer;
     z-index: 100;
+
+    .pop-over-list {
+        list-style: none;
+    }
 }
 
 .pop-over:hover {
