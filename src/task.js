@@ -53,7 +53,8 @@ const Task = {
         element.addEventListener('blur', () => {
             //контент задачи после изменения
             element.removeAttribute('contenteditable')
-            const contentAfterEdit = element.innerHTM
+            const contentAfterEdit = element.innerHTML
+            console.log('contentAfterEdit', contentAfterEdit)
 
             if (contentBeforeEdit !== contentAfterEdit) {
                 const id = element.getAttribute('data-task-id')

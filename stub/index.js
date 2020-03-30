@@ -126,25 +126,24 @@ app.delete('/remove', (req, res) => {
     }
 })
 
-// app.get('/get', (req, res) => {
-//     Data.find({}, (err, data) => {
-//         if (err) return console.log(err)
-//         res.type('json').send(data)
+app.get('/get', (req, res) => {
+    Data.find({}, (err, data) => {
+        if (err) return console.log(err)
+        res.type('json').send(data)
+    })
+})
+
+
+// app.get('/get', (rq, rs) => {
+//     const filePath = path.resolve(__dirname, './response.json')
+//     console.log(chalk.blue('filePath', filePath))
+//     fs.readFile(filePath, (error, data) => {
+//         if (error) {
+//             rs.status('404').send('file not found')
+//         }
+//         rs.type('json').send(data)
 //     })
 // })
-
-
-app.get('/get', (rq, rs) => {
-    const filePath = path.resolve(__dirname, './response.json')
-    console.log(chalk.blue('filePath', filePath))
-    fs.readFile(filePath, (error, data) => {
-        if (error) {
-            rs.status('404').send('file not found')
-        }
-        rs.type('json').send(data)
-    })
-    // rs.send()
-})
 
 // app.get('/test', (rq, rs) => {
 //     Task.find({}, function (err, docs) {

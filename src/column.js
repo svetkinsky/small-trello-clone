@@ -51,6 +51,7 @@ const Column = {
         Column.eventEdit(newColumnHead)
         Column.addTasks(newColumn)
         Column.addDragEndDropEventToColumn(newColumn)
+
         ContextMenuEvent.handler(newColumn, true)
 
         return newColumn

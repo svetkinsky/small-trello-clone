@@ -10,6 +10,9 @@ import {
 import {
     Column
 } from './column'
+import {
+    ContextMenuEvent
+} from './contextMenuEvent'
 // import {
 //     Xhr
 // } from './xhr'
@@ -35,6 +38,7 @@ changeBackground.create(backgroundImage)
 let columnAdd = document.querySelector('.column-add')
 let columns = document.querySelectorAll('.column')
 let editItems = document.querySelectorAll('.edit')
+const columnList = document.querySelector('.column-list')
 //console.log('EDIT ITEMS: ', editItems)
 
 
@@ -51,7 +55,7 @@ const run = (getTaskData) => {
     console.log('getTaskData: ', getTaskData)
     console.log('type of getTaskData.data: ', typeof getTaskData.data)
 
-    const columnList = document.querySelector('.column-list')
+
 
     //проверка на "ошибки"
     if (getTaskData.status == 0) {
@@ -61,19 +65,24 @@ const run = (getTaskData) => {
     // console.log('Get Data Status: ', getTaskData.status)
 
     //массив колонок с "бэка"
-    const content = getTaskData.content || []
-    // const content = getTaskData.data || []
+    //const content = getTaskData.content || []
+    const content = getTaskData //|| []
 
     const contentTasks = []
     const contentColumns = []
 
     content.forEach(data => {
-        //console.log('DATA idTask', data.idTask)
-        // console.log('DATA idColumn', data.idColumn)
-        if (data.idTask) contentTasks.push(data)
-
+        if (data.idTask) {
+            console.log('DATA idTask', data.idTask)
+            contentTasks.push(data)
+        }
+        if (data.idColumn) {
+            console.log('DATA idColumn', data.idColumn)
+            contentColumns.push(data)
+        }
     })
     console.log('TASK ARRAY: ', contentTasks)
+    console.log('COLUMN ARRAY: ', contentColumns)
 
     //максимальные id колонки и задачи
     let maxIdTaskCandidate = 0
@@ -143,13 +152,15 @@ const run = (getTaskData) => {
 
 
     //навешивание drug&drop на все задачи и запрос на удаление
-    document.querySelectorAll('[data-task-id]').forEach(
+    document.querySelectorAll('[data-task-id]').forEach(task => {
         Task.addDragEndDropEventToTask
-    )
+        // ContextMenuEvent.handler(task, false)
+    })
 
     //навешивание drug&drop на все колонки и запрос на удаление
-    document.querySelectorAll('[data-column-id]').forEach(
+    document.querySelectorAll('[data-column-id]').forEach(column => {
         Column.addDragEndDropEventToColumn
-    )
+        // ContextMenuEvent.handler(column, true)
+    })
 
 }
