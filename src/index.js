@@ -1,5 +1,5 @@
 import './styles/scss.scss'
-//import './xhr'
+
 
 import {
     changeBackground
@@ -13,9 +13,7 @@ import {
 import {
     ContextMenuEvent
 } from './contextMenuEvent'
-// import {
-//     Xhr
-// } from './xhr'
+
 
 const axios = require('axios')
 
@@ -23,12 +21,6 @@ axios.get('/get')
     .then(function (response) {
         run(response.data)
     }).catch(error => console.log(error))
-
-// axios.get('/test')
-//     .then(function (response) {
-//         console.log('MongoDB data: ', response.data)
-//     })
-
 
 
 const backgroundImage = ['url(/backgrounds/kordan1.jpg)', 'url(/backgrounds/kordan2.jpg)', 'url(/backgrounds/kordan3.jpg)', 'url(/backgrounds/kordan4.jpg)', 'url(/backgrounds/kordan5.jpg)', 'url(/backgrounds/kordan6.jpg)']
@@ -39,17 +31,6 @@ let columnAdd = document.querySelector('.column-add')
 let columns = document.querySelectorAll('.column')
 let editItems = document.querySelectorAll('.edit')
 const columnList = document.querySelector('.column-list')
-//console.log('EDIT ITEMS: ', editItems)
-
-
-
-//let respJSON = response 
-
-//let respJSON = Xhr.getTasks()
-
-// respJSON.then((data) =>{
-//     run(data)
-// })
 
 const run = (getTaskData) => {
     console.log('getTaskData: ', getTaskData)
@@ -62,10 +43,8 @@ const run = (getTaskData) => {
         console.log('Error: ', getTaskData.status)
     }
 
-    // console.log('Get Data Status: ', getTaskData.status)
 
     //массив колонок с "бэка"
-    //const content = getTaskData.content || []
     const content = getTaskData //|| []
 
     const contentTasks = []
@@ -88,23 +67,29 @@ const run = (getTaskData) => {
     let maxIdTaskCandidate = 0
     let maxIdColumnCandidate = 0
 
-    //перебор массива контента (колонок) с json (бэка), создание и добавление новой колонки и заполнение ее контентом с "бэка"
+    //перебор массива контента (колонок) с бэка, создание и добавление новой колонки и заполнение ее контентом с "бэка"
     //здесь column - элемент массива content
-    content.forEach((column) => {
-        if (maxIdColumnCandidate < column.id) {
-            maxIdColumnCandidate = column.id
+
+    contentColumns.forEach((column) => {
+        if (maxIdColumnCandidate < column.idColumn) {
+            maxIdColumnCandidate = column.idColumn
         }
 
         //массив задач текущей колонки
-        const tasks = column.tasks || []
+        const tasks = []
+        contentTasks.forEach(data => {
+            console.log(data)
+            console.log(column.idColumn)
+            if (data.idParent === column.idColumn) tasks.push(data)
+        })
 
-        const newColumn = Column.create(column.id, column.name)
+        const newColumn = Column.create(column.idColumn, column.titleColumn)
         //перебор массива задач для добавления их в колонку
         tasks.forEach((taskElement) => {
-            if (maxIdTaskCandidate < taskElement.id) {
-                maxIdTaskCandidate = taskElement.id
+            if (maxIdTaskCandidate < taskElement.idTask) {
+                maxIdTaskCandidate = taskElement.idTask
             }
-            const newTask = Task.create(taskElement.id, taskElement.text)
+            const newTask = Task.create(taskElement.idTask, taskElement.contentTask)
             newColumn.querySelector('.list').append(newTask)
 
         })
@@ -142,13 +127,7 @@ const run = (getTaskData) => {
                     .catch(error => console.log(error))
             }
         })
-        //console.log('maxIdColumnCandidate: ', maxIdColumnCandidate)
     })
-
-
-
-
-    //let  = false
 
 
     //навешивание drug&drop на все задачи и запрос на удаление
@@ -162,5 +141,4 @@ const run = (getTaskData) => {
         Column.addDragEndDropEventToColumn
         // ContextMenuEvent.handler(column, true)
     })
-
 }
