@@ -65,14 +65,17 @@ const Column = {
         //контент заголовка колонки до изменения
         let titleBeforeEdit = ''
         element.addEventListener('dblclick', () => {
-            titleBeforeEdit = element.innerHTML
+            titleBeforeEdit = element.querySelector('.column-title').innerHTML
             element.setAttribute('contenteditable', true)
             element.focus()
             Column.edit = true
         })
         element.addEventListener('blur', () => {
             //контент заголовка колонки после изменения
-            const titleAfterEdit = element.innerHTML
+            const titleAfterEdit = element.querySelector('.column-title').innerHTML
+            console.log('titleAfterEdit', titleAfterEdit)
+            console.log('titleBeforeEdit', titleBeforeEdit)
+
 
             //удаление атрибута contenteditable после убирания фокуса
             element.removeAttribute('contenteditable')

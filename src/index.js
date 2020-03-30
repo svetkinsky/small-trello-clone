@@ -52,16 +52,16 @@ const run = (getTaskData) => {
 
     content.forEach(data => {
         if (data.idTask) {
-            console.log('DATA idTask', data.idTask)
+            // console.log('DATA idTask', data.idTask)
             contentTasks.push(data)
         }
         if (data.idColumn) {
-            console.log('DATA idColumn', data.idColumn)
+            //console.log('DATA idColumn', data.idColumn)
             contentColumns.push(data)
         }
     })
-    console.log('TASK ARRAY: ', contentTasks)
-    console.log('COLUMN ARRAY: ', contentColumns)
+    // console.log('TASK ARRAY: ', contentTasks)
+    // console.log('COLUMN ARRAY: ', contentColumns)
 
     //максимальные id колонки и задачи
     let maxIdTaskCandidate = 0
@@ -78,8 +78,8 @@ const run = (getTaskData) => {
         //массив задач текущей колонки
         const tasks = []
         contentTasks.forEach(data => {
-            console.log(data)
-            console.log(column.idColumn)
+            //console.log(data)
+            //console.log(column.idColumn)
             if (data.idParent === column.idColumn) tasks.push(data)
         })
 
