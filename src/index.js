@@ -33,8 +33,8 @@ let editItems = document.querySelectorAll('.edit')
 const columnList = document.querySelector('.column-list')
 
 const run = (getTaskData) => {
-    console.log('getTaskData: ', getTaskData)
-    console.log('type of getTaskData.data: ', typeof getTaskData.data)
+    // console.log('getTaskData: ', getTaskData)
+    // console.log('type of getTaskData.data: ', typeof getTaskData.data)
 
 
 
@@ -99,8 +99,6 @@ const run = (getTaskData) => {
         columnList.append(newColumn)
     })
     Column.maxIdTask = maxIdTaskCandidate
-    console.log('maxIdTaskCandidate', maxIdTaskCandidate)
-
 
     //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 
     columnAdd.addEventListener('click', function () {

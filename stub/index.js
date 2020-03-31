@@ -27,7 +27,7 @@ mongoose.connect("mongodb://localhost:27017/usersdb", {
     useUnifiedTopology: true,
     useNewUrlParser: true
 }, () => {
-    // mongoose.connection.db.dropDatabase()
+    //mongoose.connection.db.dropDatabase()
 })
 
 app.use(express.static(__dirname + '/dist'))
