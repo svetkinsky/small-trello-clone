@@ -121,6 +121,7 @@ const Task = {
         event.stopPropagation()
         this.classList.remove('half-visible')
         if (this !== Task.draggingTask) {
+            //если колонка таже самая
             if (this.parentElement === Task.draggingTask.parentElement) {
                 const draggingArray = Array.from(this.parentElement.querySelectorAll('.list-item'))
                 const indexA = draggingArray.indexOf(this)
@@ -131,15 +132,15 @@ const Task = {
                 } else {
                     this.parentElement.insertBefore(Task.draggingTask, this.nextElementSibling)
                 }
-            } else {
+            }
+            //если колонка другая
+            else {
                 this.parentElement.insertBefore(Task.draggingTask, this)
-                if (Task.draggingTask) {
-                    axios.put('/update', {
-                            idTask: Task.draggingTask.getAttribute('data-task-id'),
-                            idColumn: this.parentElement.parentElement.getAttribute('data-column-id')
-                        }).then(response => console.log(response))
-                        .catch(error => console.log(error))
-                }
+                axios.put('/update', {
+                        idTask: Task.draggingTask.getAttribute('data-task-id'),
+                        idColumn: this.parentElement.parentElement.getAttribute('data-column-id')
+                    }).then(response => console.log(response))
+                    .catch(error => console.log(error))
             }
         }
     },

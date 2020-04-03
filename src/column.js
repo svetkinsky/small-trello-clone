@@ -180,7 +180,7 @@ const Column = {
     },
 
     eventDropColumn(event) {
-        console.log('DROP COLUMN ELEMENT', this)
+        const axios = require('axios')
         event.stopPropagation()
         this.classList.remove('half-visible')
         if (Column.draggingColumn) {
@@ -206,6 +206,11 @@ const Column = {
             }
         } else if (Task.draggingTask) {
             this.querySelector('.list').append(Task.draggingTask)
+            axios.put('/update', {
+                    idTask: Task.draggingTask.getAttribute('data-task-id'),
+                    idColumn: this.getAttribute('data-column-id')
+                }).then(response => console.log(response))
+                .catch(error => console.log(error))
         }
     },
 

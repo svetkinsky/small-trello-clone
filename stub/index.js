@@ -76,14 +76,14 @@ app.put('/update', jsonParser, (req, res) => {
         Data.updateOne({
             idTask: req.body.idTask
         }, {
-            idColumn: req.body.idColumn
+            idParent: req.body.idColumn
         }, (err, data) => {
             if (err) return console.log(err)
             res.send(data)
             console.log('Перенесена задача.', data)
         })
     }
-    if (req.body.idColumn) {
+    if (req.body.idColumn && !req.body.idTask) {
         Data.updateOne({
             idColumn: req.body.idColumn
         }, {

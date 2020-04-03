@@ -32,20 +32,20 @@ let columns = document.querySelectorAll('.column')
 let editItems = document.querySelectorAll('.edit')
 const columnList = document.querySelector('.column-list')
 
-const run = (getTaskData) => {
-    // console.log('getTaskData: ', getTaskData)
-    // console.log('type of getTaskData.data: ', typeof getTaskData.data)
+const run = (getData) => {
+    // console.log('getData: ', getData)
+    // console.log('type of getData.data: ', typeof getData.data)
 
 
 
     //проверка на "ошибки"
-    if (getTaskData.status == 0) {
-        console.log('Error: ', getTaskData.status)
+    if (getData.status == 0) {
+        console.log('Error: ', getData.status)
     }
 
 
     //массив колонок с "бэка"
-    const content = getTaskData //|| []
+    const content = getData //|| []
 
     const contentTasks = []
     const contentColumns = []
@@ -60,12 +60,32 @@ const run = (getTaskData) => {
             contentColumns.push(data)
         }
     })
-    // console.log('TASK ARRAY: ', contentTasks)
-    // console.log('COLUMN ARRAY: ', contentColumns)
+
+
+
+    //Перебор элементов с БД
+
+    const bruteForce = record => {
+        const columnList = document.querySelectorAll('.column')
+        const taskList = document.querySelectorAll('.list')
+
+        console.log('columnList', columnList)
+        console.log('taskList', taskList)
+        if (record.idColumn) {
+            // columnList.forEach(el => {
+            //     if (el.getAttribute('data-column-id'))
+            // })
+        }
+
+    }
+
+
+
 
     //максимальные id колонки и задачи
     let maxIdTaskCandidate = 0
     let maxIdColumnCandidate = 0
+
 
     //перебор массива контента (колонок) с бэка, создание и добавление новой колонки и заполнение ее контентом с "бэка"
     //здесь column - элемент массива content
@@ -98,6 +118,12 @@ const run = (getTaskData) => {
 
         columnList.append(newColumn)
     })
+
+
+    bruteForce(contentColumns)
+
+
+
     Column.maxIdTask = maxIdTaskCandidate
 
     //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 
