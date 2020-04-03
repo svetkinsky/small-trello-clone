@@ -32,6 +32,7 @@ let columns = document.querySelectorAll('.column')
 let editItems = document.querySelectorAll('.edit')
 const columnList = document.querySelector('.column-list')
 
+
 const run = (getData) => {
     // console.log('getData: ', getData)
     // console.log('type of getData.data: ', typeof getData.data)
@@ -65,19 +66,20 @@ const run = (getData) => {
 
     //Перебор элементов с БД
 
-    const bruteForce = record => {
-        const columnList = document.querySelectorAll('.column')
-        const taskList = document.querySelectorAll('.list')
+    // const bruteForce = record => {
+    //     const columnList = document.querySelectorAll('.column')
+    //     const taskList = document.querySelectorAll('.list')
 
-        console.log('columnList', columnList)
-        console.log('taskList', taskList)
-        if (record.idColumn) {
-            // columnList.forEach(el => {
-            //     if (el.getAttribute('data-column-id'))
-            // })
-        }
+    //     console.log('columnList', columnList)
+    //     console.log('taskList', taskList)
+    //     if (record.idColumn) {
+    //         // columnList.forEach(el => {
+    //         //     if (el.getAttribute('data-column-id'))
+    //         // })
+    //     }
 
-    }
+    // }
+
 
 
 
@@ -120,7 +122,7 @@ const run = (getData) => {
     })
 
 
-    bruteForce(contentColumns)
+    //bruteForce(contentColumns)
 
 
 

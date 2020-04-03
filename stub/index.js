@@ -16,8 +16,10 @@ const dataSchema = new Schema({
     idTask: Number,
     contentTask: String,
     idParent: Number,
+    orderTask: Number,
     idColumn: Number,
-    titleColumn: String
+    titleColumn: String,
+    orderColumn: Number
 })
 const Data = mongoose.model("Data", dataSchema)
 

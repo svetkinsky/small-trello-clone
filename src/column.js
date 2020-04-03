@@ -16,7 +16,7 @@ const Column = {
     edit: false,
 
 
-    create(id = null, content = '') {
+    create(id = null, content = '', order) {
         if (id) {
             Column.idColumns = id
         }
