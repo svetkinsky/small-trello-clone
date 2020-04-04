@@ -181,6 +181,16 @@ const Column = {
         //console.log('leave', this)
     },
 
+    order() {
+        const columnsArray = Array.from(document.querySelectorAll('.column'))
+
+        columnsArray.forEach((column, index) => {
+            column.setAttribute('order-column', index + 1)
+            console.log('index', index)
+        })
+
+    },
+
     eventDropColumn(event) {
         const axios = require('axios')
         event.stopPropagation()
@@ -191,6 +201,7 @@ const Column = {
             }
 
 
+
             if (this !== Column.draggingColumn) {
                 if (this.parentElement === Column.draggingColumn.parentElement) {
                     const draggingArray = Array.from(document.querySelectorAll('.column'))
@@ -198,13 +209,17 @@ const Column = {
                     const indexB = draggingArray.indexOf(Column.draggingColumn)
 
 
+
                     if (indexA < indexB) {
                         this.parentElement.insertBefore(Column.draggingColumn, this)
+                        Column.order()
                     } else {
                         this.parentElement.insertBefore(Column.draggingColumn, this.nextElementSibling)
+                        Column.order()
                     }
                 } else {
                     this.parentElement.insertBefore(Column.draggingColumn, this)
+                    Column.order()
                 }
             }
         } else if (Task.draggingTask) {

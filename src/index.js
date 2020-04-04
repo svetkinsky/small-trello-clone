@@ -48,6 +48,8 @@ const run = (getData) => {
     //массив колонок с "бэка"
     const content = getData //|| []
 
+    console.log('content from DB', content)
+
     const contentTasks = []
     const contentColumns = []
 
@@ -57,7 +59,7 @@ const run = (getData) => {
             contentTasks.push(data)
         }
         if (data.idColumn) {
-            //console.log('DATA idColumn', data.idColumn)
+            console.log('DATA idColumn', data)
             contentColumns.push(data)
         }
     })
@@ -90,8 +92,23 @@ const run = (getData) => {
     let maxIdColumnCandidate = 0
 
 
+    contentColumns.sort((a, b) => {
+        if (a.orderColumn < b.orderColumn) {
+            return -1;
+        }
+        if (a.orderColumn > b.orderColumn) {
+            return 1;
+        }
+    })
+
+
+
+
+
     //перебор массива контента (колонок) с бэка, создание и добавление новой колонки и заполнение ее контентом с "бэка"
     //здесь column - элемент массива content
+
+
 
     contentColumns.forEach((column) => {
         if (maxIdColumnCandidate < column.idColumn) {
@@ -106,6 +123,7 @@ const run = (getData) => {
 
 
 
+
         //массив задач текущей колонки
         const tasks = []
         contentTasks.forEach(data => {
@@ -113,6 +131,16 @@ const run = (getData) => {
             //console.log(column.idColumn)
             if (data.idParent === column.idColumn) tasks.push(data)
         })
+
+        tasks.sort((a, b) => {
+            if (a.orderTask < b.orderTask) {
+                return -1;
+            }
+            if (a.orderTask > b.orderTask) {
+                return 1;
+            }
+        })
+
 
         const newColumn = Column.create(column.idColumn, column.orderColumn, column.titleColumn)
         //перебор массива задач для добавления их в колонку

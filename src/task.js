@@ -136,16 +136,15 @@ const Task = {
 
                 if (indexA < indexB) {
                     this.parentElement.insertBefore(Task.draggingTask, this)
-                    if (Task.draggingTask.getAttribute('order-task') < this.getAttribute('order-task')) {
-                        const changeOrderArray = []
-                        tasks.forEach(el => {
-                            console.log('element', el)
-                            // while (el.getAttribute('order-task') < this.getAttribute('order-task') && el.getAttribute('order-task') > Task.draggingTask.getAttribute('order-task')) {
-                            //     el.setAttribute('order-task') = el.getAttribute('order-task') - 1
-                            //     console.log('PIU', el.getAttribute('order-task') - 1)
-                            // }
-                        })
-                    }
+                    // if (Task.draggingTask.getAttribute('order-task') < this.getAttribute('order-task')) {
+                    //     //const changeOrderArray = []
+                    //     tasks.forEach(el => {
+                    //         console.log('element', el)
+                    //         while (el.getAttribute('order-task') < this.getAttribute('order-task') && el.getAttribute('order-task') > Task.draggingTask.getAttribute('order-task')) {
+                    //             el.setAttribute('order-task') = el.getAttribute('order-task') - 1
+                    //             console.log('PIU', el.getAttribute('order-task') - 1)
+                    //         }
+                    //     })
                 } else {
                     this.parentElement.insertBefore(Task.draggingTask, this.nextElementSibling)
                 }

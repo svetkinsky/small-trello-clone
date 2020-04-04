@@ -32,6 +32,11 @@ mongoose.connect("mongodb://localhost:27017/usersdb", {
     //mongoose.connection.db.dropDatabase()
 })
 
+app.get('/clean', (req, res) => {
+    mongoose.connection.db.dropDatabase()
+    res.send('Чисто!')
+})
+
 app.use(express.static(__dirname + '/dist'))
 
 app.post('/create', jsonParser, (req, res) => {
@@ -59,6 +64,17 @@ app.post('/create', jsonParser, (req, res) => {
             console.log('Сохранена колонка', data)
         })
     }
+})
+
+app.get('/udoc', (req, res) => {
+    Data.updateOne({
+        orderColumn: 2
+    }, {
+        orderColumn: 10
+    }, (err, data) => {
+        if (err) return console.log(err)
+        res.send('test update')
+    })
 })
 
 app.put('/update', jsonParser, (req, res) => {

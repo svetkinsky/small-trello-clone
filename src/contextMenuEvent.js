@@ -4,7 +4,7 @@ const ContextMenuEvent = {
 
     handler(element, columnFlag) {
         const axios = require('axios')
-        let contextMenu = document.querySelector('.pop-over')
+        let contextMenu = document.querySelector('#delete')
 
         const showMenu = (x, y) => {
             contextMenu.style.left = x + 'px'
@@ -27,41 +27,44 @@ const ContextMenuEvent = {
             event.stopPropagation()
             showMenu(event.pageX, event.pageY)
 
+            console.log('contextMenu', contextMenu)
+            element.remove()
 
-            if (ContextMenuEvent.removingElement && !ContextMenuEvent.hideElementMenu) {
+            // if (ContextMenuEvent.removingElement && !ContextMenuEvent.hideElementMenu) {
 
-                contextMenu.querySelector('#delete').addEventListener('click', e => {
-                    e.preventDefault()
-                    console.log('CLICK on CONTEXT MENU')
-                    // console.log(ContextMenuEvent.removeElement)
+            //     contextMenu.addEventListener('click', e => {
+            //         e.stopPropagation()
+            //         e.preventDefault()
+            //         console.log('CLICK on CONTEXT MENU')
+            //         // console.log(ContextMenuEvent.removeElement)
 
 
-                    if (!columnFlag) {
-                        e.stopPropagation()
-                        element.remove()
-                        hideMenu()
-                        console.log(`Task ${element.getAttribute('data-task-id')} removed`)
-                        // axios.delete('/remove', {
-                        //         params: {
-                        //             idTask: element.getAttribute('data-task-id')
-                        //         }
-                        //     }).then(response => console.log(response))
-                        //     .catch(error => console.log(error))
-                        ContextMenuEvent.removingElement = false
-                    } else {
-                        element.remove()
-                        hideMenu()
-                        console.log(`Column ${ element.getAttribute('data-column-id')} removed`)
-                        // axios.delete('/remove', {
-                        //         params: {
-                        //             idColumn: element.getAttribute('data-column-id')
-                        //         }
-                        //     }).then(response => console.log(response))
-                        //     .catch(error => console.log(error))
-                        ContextMenuEvent.removingElement = false
-                    }
-                })
-            }
+            //         if (!columnFlag) {
+
+
+            //             hideMenu()
+            //             console.log(`Task ${element.getAttribute('data-task-id')} removed`)
+            //             // axios.delete('/remove', {
+            //             //         params: {
+            //             //             idTask: element.getAttribute('data-task-id')
+            //             //         }
+            //             //     }).then(response => console.log(response))
+            //             //     .catch(error => console.log(error))
+            //             ContextMenuEvent.removingElement = false
+            //         } else {
+            //             element.remove()
+            //             hideMenu()
+            //             console.log(`Column ${ element.getAttribute('data-column-id')} removed`)
+            //             // axios.delete('/remove', {
+            //             //         params: {
+            //             //             idColumn: element.getAttribute('data-column-id')
+            //             //         }
+            //             //     }).then(response => console.log(response))
+            //             //     .catch(error => console.log(error))
+            //             ContextMenuEvent.removingElement = false
+            //         }
+            //     })
+            // }
             console.log('removingElement', ContextMenuEvent.removingElement)
             console.log('hideElementMenu', ContextMenuEvent.hideElementMenu)
         })
