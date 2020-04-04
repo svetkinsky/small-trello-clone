@@ -81,6 +81,7 @@ const run = (getData) => {
     // }
 
 
+    let orderColumnCandidate = 0
 
 
 
@@ -97,6 +98,14 @@ const run = (getData) => {
             maxIdColumnCandidate = column.idColumn
         }
 
+        //console.log('column.orderColumn', column.orderColumn)
+
+        if (orderColumnCandidate < column.orderColumn) {
+            orderColumnCandidate = column.orderColumn
+        }
+
+
+
         //массив задач текущей колонки
         const tasks = []
         contentTasks.forEach(data => {
@@ -105,13 +114,20 @@ const run = (getData) => {
             if (data.idParent === column.idColumn) tasks.push(data)
         })
 
-        const newColumn = Column.create(column.idColumn, column.titleColumn)
+        const newColumn = Column.create(column.idColumn, column.orderColumn, column.titleColumn)
         //перебор массива задач для добавления их в колонку
         tasks.forEach((taskElement) => {
             if (maxIdTaskCandidate < taskElement.idTask) {
                 maxIdTaskCandidate = taskElement.idTask
             }
-            const newTask = Task.create(taskElement.idTask, taskElement.contentTask)
+
+            if (Column.orderTaskCandidate < taskElement.orderTask) {
+                Column.orderTaskCandidate = taskElement.orderTask
+            }
+
+            //console.log('orderTaskCandidate', Column.orderTaskCandidate)
+
+            const newTask = Task.create(taskElement.idTask, taskElement.orderTask, taskElement.contentTask)
             newColumn.querySelector('.list').append(newTask)
 
         })
@@ -130,14 +146,15 @@ const run = (getData) => {
 
     //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 
     columnAdd.addEventListener('click', function () {
+        //console.log('orderColumnCandidate', orderColumnCandidate)
 
-        columnList.append(Column.create(++maxIdColumnCandidate))
+        columnList.append(Column.create(++maxIdColumnCandidate, ++orderColumnCandidate))
 
         //фокус на заголовке новой колонки
         const lastColumnHead = columnList.lastChild.querySelector('.column-header')
         const lastColumnTitle = lastColumnHead.querySelector('.column-title')
 
-        console.log(lastColumnHead)
+        //console.log('order-column', columnList.lastChild.getAttribute('order-column'))
 
         lastColumnTitle.setAttribute('contenteditable', 'true')
         lastColumnTitle.focus()
@@ -148,7 +165,8 @@ const run = (getData) => {
                 console.log('Last Column ID', lastColumnHead.parentElement.getAttribute('data-column-id'))
                 axios.post('/create', {
                         idColumn: lastColumnHead.parentElement.getAttribute('data-column-id'),
-                        titleColumn: lastColumnTitle.innerHTML
+                        titleColumn: lastColumnTitle.innerHTML,
+                        orderColumn: columnList.lastChild.getAttribute('order-column')
                     }).then(response => console.log(response))
                     .catch(error => console.log(error))
             }

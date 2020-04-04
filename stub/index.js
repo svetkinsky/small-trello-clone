@@ -51,7 +51,8 @@ app.post('/create', jsonParser, (req, res) => {
     if (req.body.idColumn) {
         Data.create({
             idColumn: req.body.idColumn,
-            titleColumn: req.body.titleColumn
+            titleColumn: req.body.titleColumn,
+            orderColumn: req.body.orderColumn
         }, (err, data) => {
             if (err) return console.log(err)
             res.send(data)

@@ -14,9 +14,10 @@ const Column = {
     maxIdTask: 0,
     addTask: false,
     edit: false,
+    orderTaskCandidate: 0,
 
 
-    create(id = null, content = '', order) {
+    create(id = null, order, content = '') {
         if (id) {
             Column.idColumns = id
         }
@@ -37,6 +38,7 @@ const Column = {
         newColumn.setAttribute('data-column-id', Column.idColumns)
         Column.idColumns++
         newColumn.setAttribute('draggable', 'true')
+        newColumn.setAttribute('order-column', order)
 
         newColumnButton.innerHTML = 'Добавьте задачу'
         newColumnTitle.innerHTML = content
@@ -104,7 +106,7 @@ const Column = {
         buttonAdd.addEventListener('click', function (event) {
             const list = element.querySelector('.list')
             // Column.addTask = true
-            list.append(Task.create(++Column.maxIdTask))
+            list.append(Task.create(++Column.maxIdTask, ++Column.orderTaskCandidate))
 
             //фокус на добавленную задачу 
             const lastTask = list.lastChild
@@ -194,6 +196,7 @@ const Column = {
                     const draggingArray = Array.from(document.querySelectorAll('.column'))
                     const indexA = draggingArray.indexOf(this)
                     const indexB = draggingArray.indexOf(Column.draggingColumn)
+
 
                     if (indexA < indexB) {
                         this.parentElement.insertBefore(Column.draggingColumn, this)

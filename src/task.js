@@ -15,7 +15,7 @@ const Task = {
     edit: false,
 
     //метод создания задачи, по умолчанию id и content нулевые 
-    create(id = null, content = '') {
+    create(id = null, order, content = '') {
         //если входной id не нулевой, то задаче присваивается он
         if (id) {
             Task.idTasks = id
@@ -25,6 +25,7 @@ const Task = {
         newTask.classList.add('list-item', 'edit')
         newTask.setAttribute('data-task-id', Task.idTasks)
         newTask.setAttribute('draggable', 'true')
+        newTask.setAttribute('order-task', order)
         newTask.innerHTML = content
 
         Task.idTasks++
@@ -127,8 +128,24 @@ const Task = {
                 const indexA = draggingArray.indexOf(this)
                 const indexB = draggingArray.indexOf(Task.draggingTask)
 
+                // console.log('draggingArray', draggingArray)
+                // console.log('indexA', indexA)
+                // console.log('indexB', indexB)
+
+                const tasks = document.querySelectorAll('.list-item')
+
                 if (indexA < indexB) {
                     this.parentElement.insertBefore(Task.draggingTask, this)
+                    if (Task.draggingTask.getAttribute('order-task') < this.getAttribute('order-task')) {
+                        const changeOrderArray = []
+                        tasks.forEach(el => {
+                            console.log('element', el)
+                            // while (el.getAttribute('order-task') < this.getAttribute('order-task') && el.getAttribute('order-task') > Task.draggingTask.getAttribute('order-task')) {
+                            //     el.setAttribute('order-task') = el.getAttribute('order-task') - 1
+                            //     console.log('PIU', el.getAttribute('order-task') - 1)
+                            // }
+                        })
+                    }
                 } else {
                     this.parentElement.insertBefore(Task.draggingTask, this.nextElementSibling)
                 }
