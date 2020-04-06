@@ -9,7 +9,7 @@ import {
 } from './contextMenuEvent'
 
 const Column = {
-    idColumns: 4,
+    idColumns: 1,
     draggingColumn: null,
     maxIdTask: 0,
     addTask: false,
@@ -27,6 +27,7 @@ const Column = {
         const newList = document.createElement('div')
         const newColumnTitle = document.createElement('div')
         const newColumnHeadButton = document.createElement('span')
+        const newDeleteButton = document.createElement('span')
 
         newColumn.classList.add('column')
         newColumnHead.classList.add('column-header')
@@ -34,6 +35,7 @@ const Column = {
         newColumnHeadButton.classList.add('column-header-button')
         newList.classList.add('list')
         newColumnButton.classList.add('task-add')
+        newDeleteButton.classList.add('pop-over')
 
         newColumn.setAttribute('data-column-id', Column.idColumns)
         Column.idColumns++
@@ -43,12 +45,14 @@ const Column = {
         newColumnButton.innerHTML = 'Добавьте задачу'
         newColumnTitle.innerHTML = content
         newColumnHeadButton.innerHTML = '...'
+        newDeleteButton.innerHTML = 'Удалить'
 
         newColumnHead.append(newColumnTitle)
         newColumnHead.append(newColumnHeadButton)
         newColumn.append(newColumnHead)
         newColumn.append(newList)
         newColumn.append(newColumnButton)
+        newColumn.prepend(newDeleteButton)
 
         Column.eventEdit(newColumnHead)
         Column.addTasks(newColumn)
@@ -105,8 +109,14 @@ const Column = {
         // const addTask = false
         buttonAdd.addEventListener('click', function (event) {
             const list = element.querySelector('.list')
-            // Column.addTask = true
-            list.append(Task.create(++Column.maxIdTask, ++Column.orderTaskCandidate))
+            list.append(Task.create(++Column.maxIdTask))
+
+
+            const listTasks = Array.from(list.querySelectorAll('.list-item'))
+            listTasks.forEach((task, index) => {
+                task.setAttribute('order-task', index + 1)
+                console.log('task set order attribute', task)
+            })
 
             //фокус на добавленную задачу 
             const lastTask = list.lastChild
@@ -118,7 +128,8 @@ const Column = {
                     axios.post('/create', {
                             idTask: lastTask.getAttribute('data-task-id'),
                             contentTask: lastTask.innerHTML,
-                            idParent: list.parentElement.getAttribute('data-column-id')
+                            idParent: list.parentElement.getAttribute('data-column-id'),
+                            orderTask: lastTask.getAttribute('order-task')
                         }).then(response => console.log(response))
                         .catch(error => console.log(error))
                 }
@@ -183,12 +194,21 @@ const Column = {
 
     order() {
         const columnsArray = Array.from(document.querySelectorAll('.column'))
+        const axios = require('axios')
+        const orderColumnData = []
 
         columnsArray.forEach((column, index) => {
             column.setAttribute('order-column', index + 1)
             console.log('index', index)
+            orderColumnData.push({
+                id: column.getAttribute('data-column-id'),
+                order: index + 1
+            })
         })
-
+        axios.put('/update', {
+                columnOrders: orderColumnData
+            }).then(response => console.log(response))
+            .catch(error => console.log(error))
     },
 
     eventDropColumn(event) {

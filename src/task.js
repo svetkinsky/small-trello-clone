@@ -21,14 +21,21 @@ const Task = {
             Task.idTasks = id
         }
         const newTask = document.createElement('div')
+        const newDeleteButton = document.createElement('span')
 
         newTask.classList.add('list-item', 'edit')
+        newDeleteButton.classList.add('pop-over')
         newTask.setAttribute('data-task-id', Task.idTasks)
         newTask.setAttribute('draggable', 'true')
         newTask.setAttribute('order-task', order)
         newTask.innerHTML = content
+        newDeleteButton.innerHTML = 'Удалить'
+
+        newTask.append(newDeleteButton)
 
         Task.idTasks++
+
+
 
         ContextMenuEvent.handler(newTask, false)
         Task.eventEdit(newTask)
@@ -117,6 +124,28 @@ const Task = {
         this.classList.remove('half-visible')
     },
 
+    order(elementTask) {
+        const axios = require('axios')
+        const list = elementTask.parentElement
+        const listTasks = Array.from(list.querySelectorAll('.list-item'))
+        const orderTaskData = []
+        listTasks.forEach((task, index) => {
+            task.setAttribute('order-task', index + 1)
+            console.log('task set order attribute', task)
+            orderTaskData.push({
+                id: task.getAttribute('data-task-id'),
+                order: index + 1
+            })
+        })
+        //console.log('orderTaskData', orderTaskData)
+
+        axios.put('/update', {
+                taskOrders: orderTaskData
+            }).then(response => console.log(response))
+            .catch(error => console.log(error))
+
+    },
+
     eventDropTask(event) {
         const axios = require('axios')
         event.stopPropagation()
@@ -128,30 +157,18 @@ const Task = {
                 const indexA = draggingArray.indexOf(this)
                 const indexB = draggingArray.indexOf(Task.draggingTask)
 
-                // console.log('draggingArray', draggingArray)
-                // console.log('indexA', indexA)
-                // console.log('indexB', indexB)
-
-                const tasks = document.querySelectorAll('.list-item')
-
                 if (indexA < indexB) {
                     this.parentElement.insertBefore(Task.draggingTask, this)
-                    // if (Task.draggingTask.getAttribute('order-task') < this.getAttribute('order-task')) {
-                    //     //const changeOrderArray = []
-                    //     tasks.forEach(el => {
-                    //         console.log('element', el)
-                    //         while (el.getAttribute('order-task') < this.getAttribute('order-task') && el.getAttribute('order-task') > Task.draggingTask.getAttribute('order-task')) {
-                    //             el.setAttribute('order-task') = el.getAttribute('order-task') - 1
-                    //             console.log('PIU', el.getAttribute('order-task') - 1)
-                    //         }
-                    //     })
+                    Task.order(Task.draggingTask)
                 } else {
                     this.parentElement.insertBefore(Task.draggingTask, this.nextElementSibling)
+                    Task.order(Task.draggingTask)
                 }
             }
             //если колонка другая
             else {
                 this.parentElement.insertBefore(Task.draggingTask, this)
+                Task.order(Task.draggingTask)
                 axios.put('/update', {
                         idTask: Task.draggingTask.getAttribute('data-task-id'),
                         idColumn: this.parentElement.parentElement.getAttribute('data-column-id')

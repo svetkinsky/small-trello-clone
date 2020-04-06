@@ -46,20 +46,20 @@ const run = (getData) => {
 
 
     //массив колонок с "бэка"
-    const content = getData //|| []
+    //const content = getData //|| []
 
-    console.log('content from DB', content)
+    console.log('content from DB', getData)
 
     const contentTasks = []
     const contentColumns = []
 
-    content.forEach(data => {
+    getData.forEach(data => {
         if (data.idTask) {
             // console.log('DATA idTask', data.idTask)
             contentTasks.push(data)
         }
         if (data.idColumn) {
-            console.log('DATA idColumn', data)
+            console.log('DATA Column', data)
             contentColumns.push(data)
         }
     })
@@ -100,6 +100,7 @@ const run = (getData) => {
             return 1;
         }
     })
+
 
 
 
@@ -149,11 +150,6 @@ const run = (getData) => {
                 maxIdTaskCandidate = taskElement.idTask
             }
 
-            if (Column.orderTaskCandidate < taskElement.orderTask) {
-                Column.orderTaskCandidate = taskElement.orderTask
-            }
-
-            //console.log('orderTaskCandidate', Column.orderTaskCandidate)
 
             const newTask = Task.create(taskElement.idTask, taskElement.orderTask, taskElement.contentTask)
             newColumn.querySelector('.list').append(newTask)

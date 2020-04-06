@@ -34,7 +34,7 @@ mongoose.connect("mongodb://localhost:27017/usersdb", {
 
 app.get('/clean', (req, res) => {
     mongoose.connection.db.dropDatabase()
-    res.send('Чисто!')
+    res.send('В БД чисто!')
 })
 
 app.use(express.static(__dirname + '/dist'))
@@ -46,7 +46,8 @@ app.post('/create', jsonParser, (req, res) => {
         Data.create({
             idTask: req.body.idTask,
             contentTask: req.body.contentTask,
-            idParent: req.body.idParent
+            idParent: req.body.idParent,
+            orderTask: req.body.orderTask
         }, (err, data) => {
             if (err) return console.log(err)
             res.send(data)
@@ -80,7 +81,7 @@ app.get('/udoc', (req, res) => {
 app.put('/update', jsonParser, (req, res) => {
     if (!req.body) return res.sendStatus(400)
 
-    if (req.body.idTask && !req.body.idColumn) {
+    if (req.body.idTask && !req.body.idColumn && !req.body.Orderstask) {
         Data.updateOne({
             idTask: req.body.idTask
         }, {
@@ -91,7 +92,7 @@ app.put('/update', jsonParser, (req, res) => {
             console.log('Обновоена задача.', data)
         })
     }
-    if (req.body.idTask && req.body.idColumn) {
+    if (req.body.idTask && req.body.idColumn && !req.body.Orderstask) {
         Data.updateOne({
             idTask: req.body.idTask
         }, {
@@ -114,6 +115,52 @@ app.put('/update', jsonParser, (req, res) => {
         })
     }
 
+    if (req.body.columnOrders) {
+        (req.body.columnOrders).forEach(orderData => {
+            Data.updateOne({
+                idColumn: orderData.id
+            }, {
+                orderColumn: orderData.order
+            }, (err, data) => {
+                if (err) return console.log(err)
+                console.log('Изменен порядок колонки', data)
+            })
+        })
+        res.send('Изменен порядок колонок')
+    }
+
+
+    if (req.body.taskOrders) {
+        //console.log('taskOrders', req.body.taskOrders)
+        (req.body.taskOrders).forEach(order => {
+            Data.updateOne({
+                idTask: order.id
+            }, {
+                orderTask: order.order
+            }, (err, data) => {
+                if (err) return console.log(err)
+                console.log('Изменен порядок задач', data)
+            })
+
+        })
+        res.send('Изменен порядок задач')
+    }
+
+
+    // if (req.body.taskOrders) {
+    //     //console.log('Orderstask', req.body.Orderstask)
+    //     (req.body.Orderstask).forEach(orderData => {
+    //         Data.updateOne({
+    //             idTask: orderData.id
+    //         }, {
+    //             orderTask: orderData.order
+    //         }, (err, data) => {
+    //             if (err) return console.log(err)
+    //             console.log('Изменен порядок задач', data)
+    //         })
+    //     })
+    //     res.send('Изменен порядок задач')
+    // }
 })
 
 
@@ -129,21 +176,21 @@ app.delete('/remove', (req, res) => {
     }
 
     if (req.query.idColumn) {
-        Data.remove({
+        Data.deleteOne({
             idColumn: req.query.idColumn
         }, (err, result) => {
             if (err) return console.log(err)
-            res.send(result)
-            console.log('Колонка удалена.', result)
-        })
-        // Data.remove({
-        //     idParent: req.query.idColumn
-        // }, (err, result) => {
-        //     if (err) return console.log(err)
-        //     res.send(result)
-        //     console.log(result)
-        // })
 
+            //console.log('Колонка удалена.', result)
+        })
+        Data.deleteMany({
+            idParent: req.query.idColumn
+        }, (err, result) => {
+            if (err) return console.log(err)
+            // res.send(result)
+            // console.log(result)
+        })
+        res.send('Колонка удалена полностью.')
     }
 })
 
