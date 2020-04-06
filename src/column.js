@@ -120,14 +120,16 @@ const Column = {
 
             //фокус на добавленную задачу 
             const lastTask = list.lastChild
-            lastTask.setAttribute('contenteditable', 'true')
-            lastTask.focus()
-            lastTask.addEventListener('blur', () => {
-                lastTask.removeAttribute('contenteditable')
+            lastTask.firstChild.setAttribute('contenteditable', 'true')
+            lastTask.firstChild.focus()
+
+            lastTask.firstChild.addEventListener('blur', () => {
+                console.log('piu')
+                lastTask.firstChild.removeAttribute('contenteditable')
                 if (!Task.edit) {
                     axios.post('/create', {
                             idTask: lastTask.getAttribute('data-task-id'),
-                            contentTask: lastTask.innerHTML,
+                            contentTask: lastTask.firstChild.innerHTML,
                             idParent: list.parentElement.getAttribute('data-column-id'),
                             orderTask: lastTask.getAttribute('order-task')
                         }).then(response => console.log(response))

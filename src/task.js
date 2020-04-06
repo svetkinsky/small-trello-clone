@@ -22,15 +22,19 @@ const Task = {
         }
         const newTask = document.createElement('div')
         const newDeleteButton = document.createElement('span')
+        const newTaskContent = document.createElement('div')
 
-        newTask.classList.add('list-item', 'edit')
+        newTask.classList.add('list-item')
+        newTaskContent.classList.add('edit')
         newDeleteButton.classList.add('pop-over')
+        newTaskContent.classList.add('list-item-content')
         newTask.setAttribute('data-task-id', Task.idTasks)
         newTask.setAttribute('draggable', 'true')
         newTask.setAttribute('order-task', order)
-        newTask.innerHTML = content
+        newTaskContent.innerHTML = content
         newDeleteButton.innerHTML = 'Удалить'
 
+        newTask.append(newTaskContent)
         newTask.append(newDeleteButton)
 
         Task.idTasks++
@@ -38,7 +42,7 @@ const Task = {
 
 
         ContextMenuEvent.handler(newTask, false)
-        Task.eventEdit(newTask)
+        Task.eventEdit(newTaskContent)
         Task.addDragEndDropEventToTask(newTask)
 
         return newTask
@@ -65,8 +69,9 @@ const Task = {
             console.log('contentAfterEdit', contentAfterEdit)
 
             if (contentBeforeEdit !== contentAfterEdit) {
-                const id = element.getAttribute('data-task-id')
-                const idParent = element.closest('.column').getAttribute('data-column-id')
+                const id = element.parentElement.getAttribute('data-task-id')
+                console.log(element.parentElement)
+                //const idParent = element.closest('.column').getAttribute('data-column-id')
                 if (Task.edit) {
                     axios.put('/update', {
                             idTask: id,
