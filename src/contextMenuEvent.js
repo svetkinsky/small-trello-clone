@@ -57,10 +57,15 @@ const ContextMenuEvent = {
             event.stopPropagation()
         })
 
+        //if (columnFlag) {
         contextMenu.addEventListener('mouseout', event => {
-            //console.log(event)
             hideMenu()
         })
+        // } else {
+        //     contextMenu.addEventListener('mouseout', event => {
+        //         hideMenu()
+        //     })
+        // }
     },
 }
 

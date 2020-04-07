@@ -35,7 +35,7 @@ const Task = {
         newDeleteButton.innerHTML = 'Удалить'
 
         newTask.append(newTaskContent)
-        newTask.append(newDeleteButton)
+        newTask.prepend(newDeleteButton)
 
         Task.idTasks++
 

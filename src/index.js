@@ -53,39 +53,30 @@ const run = (getData) => {
     const contentTasks = []
     const contentColumns = []
 
+    // getData.forEach(data => {
+    //     if (data.idTask) {
+    //         // console.log('DATA idTask', data.idTask)
+    //         contentTasks.push(data)
+    //     }
+    //     if (data.idColumn) {
+    //         console.log('DATA Column', data)
+    //         contentColumns.push(data)
+    //     }
+    // })
+
     getData.forEach(data => {
-        if (data.idTask) {
-            // console.log('DATA idTask', data.idTask)
-            contentTasks.push(data)
-        }
         if (data.idColumn) {
-            console.log('DATA Column', data)
-            contentColumns.push(data)
+
+            contentColumns.forEach(column => {
+                if (column.idColumn === data.idColumn) column.titleColumn = data.titleColumn
+            })
         }
     })
 
 
 
-    //Перебор элементов с БД
-
-    // const bruteForce = record => {
-    //     const columnList = document.querySelectorAll('.column')
-    //     const taskList = document.querySelectorAll('.list')
-
-    //     console.log('columnList', columnList)
-    //     console.log('taskList', taskList)
-    //     if (record.idColumn) {
-    //         // columnList.forEach(el => {
-    //         //     if (el.getAttribute('data-column-id'))
-    //         // })
-    //     }
-
-    // }
-
 
     let orderColumnCandidate = 0
-
-
 
     //максимальные id колонки и задачи
     let maxIdTaskCandidate = 0
@@ -116,20 +107,14 @@ const run = (getData) => {
             maxIdColumnCandidate = column.idColumn
         }
 
-        //console.log('column.orderColumn', column.orderColumn)
-
+        //максимальное значение order колонки
         if (orderColumnCandidate < column.orderColumn) {
             orderColumnCandidate = column.orderColumn
         }
 
-
-
-
         //массив задач текущей колонки
         const tasks = []
         contentTasks.forEach(data => {
-            //console.log(data)
-            //console.log(column.idColumn)
             if (data.idParent === column.idColumn) tasks.push(data)
         })
 
@@ -155,9 +140,6 @@ const run = (getData) => {
             newColumn.querySelector('.list').append(newTask)
 
         })
-
-
-
         columnList.append(newColumn)
     })
 
@@ -178,10 +160,9 @@ const run = (getData) => {
         const lastColumnHead = columnList.lastChild.querySelector('.column-header')
         const lastColumnTitle = lastColumnHead.querySelector('.column-title')
 
-        //console.log('order-column', columnList.lastChild.getAttribute('order-column'))
-
         lastColumnTitle.setAttribute('contenteditable', 'true')
         lastColumnTitle.focus()
+
         lastColumnTitle.addEventListener('blur', () => {
             lastColumnTitle.removeAttribute('contenteditable')
 
@@ -198,15 +179,13 @@ const run = (getData) => {
     })
 
 
-    //навешивание drug&drop на все задачи и запрос на удаление
+    //навешивание drug&drop на все задачи
     document.querySelectorAll('[data-task-id]').forEach(task => {
         Task.addDragEndDropEventToTask
-        // ContextMenuEvent.handler(task, false)
     })
 
-    //навешивание drug&drop на все колонки и запрос на удаление
+    //навешивание drug&drop на все колонки
     document.querySelectorAll('[data-column-id]').forEach(column => {
         Column.addDragEndDropEventToColumn
-        // ContextMenuEvent.handler(column, true)
     })
 }

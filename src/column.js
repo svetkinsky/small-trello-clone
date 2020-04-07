@@ -102,6 +102,10 @@ const Column = {
     },
 
 
+    addColumn(list) {
+
+    },
+
 
     addTasks(element) {
         const axios = require('axios')
