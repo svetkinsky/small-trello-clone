@@ -10,9 +10,7 @@ import {
 import {
     Column
 } from './column'
-import {
-    ContextMenuEvent
-} from './contextMenuEvent'
+
 
 
 const axios = require('axios')
@@ -27,18 +25,10 @@ const backgroundImage = ['url(/backgrounds/kordan1.jpg)', 'url(/backgrounds/kord
 
 changeBackground.create(backgroundImage)
 
-let columnAdd = document.querySelector('.column-add')
-let columns = document.querySelectorAll('.column')
-let editItems = document.querySelectorAll('.edit')
 const columnList = document.querySelector('.column-list')
 
 
 const run = (getData) => {
-    // console.log('getData: ', getData)
-    // console.log('type of getData.data: ', typeof getData.data)
-
-
-
     //проверка на "ошибки"
     if (getData.status == 0) {
         console.log('Error: ', getData.status)
@@ -46,7 +36,6 @@ const run = (getData) => {
 
 
     //массив колонок с "бэка"
-    //const content = getData //|| []
 
     console.log('content from DB', getData)
 
@@ -64,15 +53,35 @@ const run = (getData) => {
     //     }
     // })
 
-    getData.forEach(data => {
-        if (data.idColumn) {
+    // getData.forEach(data => {
+    //     if (data.idTask) {
+    //         //const emptyTasks = document.querySelectorAll('.list-item')
 
-            contentColumns.forEach(column => {
-                if (column.idColumn === data.idColumn) column.titleColumn = data.titleColumn
-            })
+    //     }
+
+    // })
+
+
+
+    // getData.sort((a, b) => {
+    //     if (a.orderColumn < b.orderColumn) {
+    //         return -1;
+    //     }
+    //     if (a.orderColumn > b.orderColumn) {
+    //         return 1;
+    //     }
+    // })
+
+    getData.sort((a, b) => {
+        if (a.orderTask < b.orderTask) {
+            return -1;
+        }
+        if (a.orderTask > b.orderTask) {
+            return 1;
         }
     })
 
+    console.log('getData', getData)
 
 
 
@@ -84,12 +93,15 @@ const run = (getData) => {
 
 
     contentColumns.sort((a, b) => {
-        if (a.orderColumn < b.orderColumn) {
-            return -1;
-        }
-        if (a.orderColumn > b.orderColumn) {
-            return 1;
-        }
+
+        return a.orderColumn < b.orderColumn ? -1 : 1
+
+        // if (a.orderColumn < b.orderColumn) {
+        //     return -1;
+        // }
+        // if (a.orderColumn > b.orderColumn) {
+        //     return 1;
+        // }
     })
 
 
@@ -98,9 +110,6 @@ const run = (getData) => {
 
 
     //перебор массива контента (колонок) с бэка, создание и добавление новой колонки и заполнение ее контентом с "бэка"
-    //здесь column - элемент массива content
-
-
 
     contentColumns.forEach((column) => {
         if (maxIdColumnCandidate < column.idColumn) {
@@ -142,41 +151,11 @@ const run = (getData) => {
         })
         columnList.append(newColumn)
     })
-
-
-    //bruteForce(contentColumns)
-
-
-
     Column.maxIdTask = maxIdTaskCandidate
 
+
     //создание и добавление новой колонки при нажатии на кнопку "Добавьте еще одну колонку" 
-    columnAdd.addEventListener('click', function () {
-        //console.log('orderColumnCandidate', orderColumnCandidate)
-
-        columnList.append(Column.create(++maxIdColumnCandidate, ++orderColumnCandidate))
-
-        //фокус на заголовке новой колонки
-        const lastColumnHead = columnList.lastChild.querySelector('.column-header')
-        const lastColumnTitle = lastColumnHead.querySelector('.column-title')
-
-        lastColumnTitle.setAttribute('contenteditable', 'true')
-        lastColumnTitle.focus()
-
-        lastColumnTitle.addEventListener('blur', () => {
-            lastColumnTitle.removeAttribute('contenteditable')
-
-            if (!Column.edit) {
-                console.log('Last Column ID', lastColumnHead.parentElement.getAttribute('data-column-id'))
-                axios.post('/create', {
-                        idColumn: lastColumnHead.parentElement.getAttribute('data-column-id'),
-                        titleColumn: lastColumnTitle.innerHTML,
-                        orderColumn: columnList.lastChild.getAttribute('order-column')
-                    }).then(response => console.log(response))
-                    .catch(error => console.log(error))
-            }
-        })
-    })
+    Column.addColumn(columnList, maxIdColumnCandidate, orderColumnCandidate)
 
 
     //навешивание drug&drop на все задачи

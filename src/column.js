@@ -102,47 +102,72 @@ const Column = {
     },
 
 
-    addColumn(list) {
+    addColumn(list, maxId, order) {
+        const axios = require('axios')
+        const columnAdd = document.querySelector('.column-add')
+        columnAdd.addEventListener('click', function () {
+            //console.log('orderColumnCandidate', order)
 
+            list.append(Column.create(++maxId, ++order))
+
+            //фокус на заголовке новой колонки
+            const lastColumnHead = list.lastChild.querySelector('.column-header')
+            const lastColumnTitle = lastColumnHead.querySelector('.column-title')
+
+            lastColumnTitle.setAttribute('contenteditable', 'true')
+            lastColumnTitle.focus()
+
+            lastColumnTitle.addEventListener('blur', () => {
+                lastColumnTitle.removeAttribute('contenteditable')
+
+                if (!Column.edit) {
+                    console.log('Last Column ID', lastColumnHead.parentElement.getAttribute('data-column-id'))
+                    axios.post('/create', {
+                            idColumn: lastColumnHead.parentElement.getAttribute('data-column-id'),
+                            titleColumn: lastColumnTitle.innerHTML,
+                            orderColumn: list.lastChild.getAttribute('order-column')
+                        }).then(response => console.log(response))
+                        .catch(error => console.log(error))
+                }
+            })
+        })
     },
 
 
     addTasks(element) {
         const axios = require('axios')
         const buttonAdd = element.querySelector('.task-add')
-        // const addTask = false
         buttonAdd.addEventListener('click', function (event) {
             const list = element.querySelector('.list')
             list.append(Task.create(++Column.maxIdTask))
 
+            console.log('add tasks')
 
             const listTasks = Array.from(list.querySelectorAll('.list-item'))
             listTasks.forEach((task, index) => {
                 task.setAttribute('order-task', index + 1)
-                console.log('task set order attribute', task)
             })
 
             //фокус на добавленную задачу 
             const lastTask = list.lastChild
-            lastTask.firstChild.setAttribute('contenteditable', 'true')
-            lastTask.firstChild.focus()
+            console.log('last task', lastTask)
 
-            lastTask.firstChild.addEventListener('blur', () => {
+            lastTask.lastChild.setAttribute('contenteditable', 'true')
+            lastTask.lastChild.focus()
+
+            lastTask.lastChild.addEventListener('blur', () => {
                 console.log('piu')
-                lastTask.firstChild.removeAttribute('contenteditable')
+                lastTask.lastChild.removeAttribute('contenteditable')
                 if (!Task.edit) {
                     axios.post('/create', {
                             idTask: lastTask.getAttribute('data-task-id'),
-                            contentTask: lastTask.firstChild.innerHTML,
+                            contentTask: lastTask.lastChild.innerHTML,
                             idParent: list.parentElement.getAttribute('data-column-id'),
                             orderTask: lastTask.getAttribute('order-task')
                         }).then(response => console.log(response))
                         .catch(error => console.log(error))
                 }
-                // Column.addTask = true
-
             })
-            //console.log('Max Id of tasks: ', Column.maxIdTask)
         })
 
     },
