@@ -86,7 +86,6 @@ const plugins = () => {
                 collapseWhitespace: isProd
             }
         }),
-        new CleanWebpackPlugin(),
         new CopyWebpackPlugin([{
                 from: path.resolve(__dirname, 'src/trello.ico'),
                 to: path.resolve(__dirname, 'dist')
